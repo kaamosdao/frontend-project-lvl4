@@ -18,7 +18,7 @@ build:
 lint:
 	npx eslint . --ext js,jsx
 
-publish:
+publish:npm 
 	npm publish
 
 deploy:

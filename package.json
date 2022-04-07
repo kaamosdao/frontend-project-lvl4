@@ -1,5 +1,5 @@
 {
-  "name": "frontend_l4_chat_project",
+  "name": "@hexlet/code",
   "version": "0.0.1",
   "description": "",
   "main": "server/plugin.js",
@@ -15,9 +15,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:hexlet-components/projects-frontend-l4-server.git"
+    "url": "git@github.com:kaamosdao/frontend-project-lvl4.git"
   },
-  "author": "Kirill Mokevnin",
+  "author": "Alexander Demidov",
   "license": "ISC",
   "homepage": "",
   "dependencies": {
@@ -39,7 +39,9 @@
     "point-of-view": "^5.1.0",
     "popper.js": "^1.16.1",
     "pug": "^3.0.2",
-    "react": "^17.0.2",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-router-dom": "^6.3.0",
     "regenerator-runtime": "^0.13.9"
   },
   "devDependencies": {
