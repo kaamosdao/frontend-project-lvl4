@@ -36,4 +36,15 @@ rules:
   functional/no-try-statement: 0
   functional/no-throw-statement: 0
   import/no-extraneous-dependencies: [error, { devDependencies: true }]
-  react/jsx-filename-extension: [1, { "extensions": [".js", ".jsx"] }]
+    react/jsx-filename-extension: [1, { "extensions": [".js", ".jsx"] }],
+    react/jsx-props-no-spreading: 0
+  # jsx-a11y/label-has-associated-control: ["error", {
+  #       "required": {
+  #         "some": ["nesting", "id"]
+  #       }
+  #     }]
+  # jsx-a11y/label-has-for: ["error", {
+  #       "required": {
+  #         "some": ["nesting", "id"]
+  #       }
+  #     }]
