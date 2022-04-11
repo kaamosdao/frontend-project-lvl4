@@ -4,7 +4,6 @@ import { Navigate } from 'react-router-dom';
 const isLogined = false;
 
 function Home() {
-
   if (isLogined) {
     return (
       <div className="card text-center">
@@ -15,7 +14,7 @@ function Home() {
       </div>
     );
   }
-  return <Navigate to="/login" />
+  return <Navigate to="/login" />;
 }
 
 export default Home;

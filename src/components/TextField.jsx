@@ -2,7 +2,6 @@ import React from 'react';
 import { useField, ErrorMessage } from 'formik';
 import cn from 'classnames';
 
-
 function TextField({ label, ...props }) {
   const [field, meta] = useField(props);
   const inputClass = cn('form-control', {

@@ -14,7 +14,7 @@ function Signup() {
           initialValues={{ login: '', password: '', confirmPassword: '' }}
           validationSchema={schema}
         >
-          {(formik) => (
+          {() => (
             <Form>
               <div className="w-50 m-auto mb-4">
                 <TextField name="login" type="text" label="Login" placeholder="login" />
