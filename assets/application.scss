@@ -1,1 +1,6 @@
 @import '~bootstrap/scss/bootstrap';
+
+.navbar-brand:hover,
+.nav-link:hover {
+  opacity: 0.75;
+}
