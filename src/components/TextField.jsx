@@ -1,18 +1,24 @@
 import React from 'react';
-import { useField, ErrorMessage } from 'formik';
 import cn from 'classnames';
 
-function TextField({ label, ...props }) {
-  const [field, meta] = useField(props);
+function TextField({
+  label, touched, error, ...props
+}) {
   const inputClass = cn('form-control', {
-    'is-invalid': meta.touched && meta.error,
+    'is-invalid': touched && error,
   });
+
+  const isServerError = error === 'user already exsist' || error === 'user not found';
+  const isPassword = props.id === 'password';
 
   return (
     <div className="form-floating mb-4">
-      <input className={inputClass} id={field.name} {...field} {...props} />
-      <label htmlFor={field.name}>{label}</label>
-      <ErrorMessage component="div" name={field.name} className="invalid-tooltip" />
+      <input className={inputClass} {...props} />
+      <label htmlFor={props.id}>{label}</label>
+      <div className="invalid-tooltip">
+        {!isServerError && touched && error}
+        {isPassword && isServerError ? error : ''}
+      </div>
     </div>
   );
 }
