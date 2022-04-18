@@ -1,4 +1,5 @@
 import React from 'react';
+import { Form, FloatingLabel } from 'react-bootstrap';
 import cn from 'classnames';
 
 function TextField({
@@ -12,14 +13,13 @@ function TextField({
   const isPassword = props.id === 'password';
 
   return (
-    <div className="form-floating mb-4">
-      <input className={inputClass} {...props} />
-      <label htmlFor={props.id}>{label}</label>
+    <FloatingLabel label={label} className="form-floating mb-4">
+      <Form.Control className={inputClass} {...props} placeholder={label} />
       <div className="invalid-tooltip">
         {!isServerError && touched && error}
         {isPassword && isServerError ? error : ''}
       </div>
-    </div>
+    </FloatingLabel>
   );
 }
 

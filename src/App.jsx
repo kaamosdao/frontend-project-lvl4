@@ -15,7 +15,6 @@ function AuthProvider({ children }) {
   const logIn = (username, token) => {
     localStorageData.setAuth(username, token);
     setLoggedIn(true);
-    // alert(`loggedin = ${loggedIn}`)
   };
   const logOut = () => {
     localStorageData.removeAuth();
