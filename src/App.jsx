@@ -1,5 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import store from './slices/index.js';
 import Home from './components/Home.jsx';
 import Login from './components/Login.jsx';
 import Signup from './components/Signup.jsx';
@@ -30,19 +32,21 @@ function AuthProvider({ children }) {
 
 function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
-            <Route path="login" element={<Login />} />
-            <Route path="signup" element={<Signup />} />
-            <Route path="about" element={<About />} />
-            <Route path="*" element={<Notfound />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+    <Provider store={store}>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Home />} />
+              <Route path="login" element={<Login />} />
+              <Route path="signup" element={<Signup />} />
+              <Route path="about" element={<About />} />
+              <Route path="*" element={<Notfound />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
+    </Provider>
   );
 }
 
