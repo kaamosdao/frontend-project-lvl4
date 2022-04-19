@@ -1,32 +1,21 @@
 import React from 'react';
-import { Link, useNavigate, Navigate } from 'react-router-dom';
-import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { Form, Button } from 'react-bootstrap';
 import TextField from './TextField.jsx';
 import useAuth from '../hooks/index.jsx';
 import FormWrapper from './FormWrapper.jsx';
+import handleSubmit from '../handleSubmit.js';
 
 function Login() {
   const auth = useAuth();
   const navigate = useNavigate();
   if (auth.loggedIn) {
-    return <Navigate to="/" />;
+    navigate('/', { replace: true });
   }
   const formik = useFormik({
     initialValues: { login: '', password: '' },
-    onSubmit: async (values, actions) => {
-      try {
-        const { data } = await axios.post('/api/v1/login', {
-          username: values.login,
-          password: values.password,
-        });
-        auth.logIn(data.username, data.token);
-        navigate('/', { replace: true });
-      } catch (error) {
-        actions.setErrors({ userNotFound: 'user not found' });
-      }
-    },
+    onSubmit: handleSubmit(auth, navigate, 'loginPath'),
   });
   return (
     <FormWrapper title="Log in to account">

@@ -6,6 +6,7 @@ import { setChannels, setCurrentChannel } from '../slices/channelSlice.js';
 import { setMessages } from '../slices/messageSlice.js';
 import useAuth from '../hooks/index.jsx';
 import localStorageData from '../localStorageData.js';
+import routes from '../routes.js';
 
 function Home() {
   const auth = useAuth();
@@ -24,10 +25,16 @@ function Home() {
             Authorization: `Bearer ${token}`,
           },
         };
-        const { data } = await axios.get('/api/v1/data', options);
-        dispatch(setChannels(data.channels));
-        dispatch(setMessages(data.messages));
-        dispatch(setCurrentChannel(data.currentChannelId));
+        try {
+          const { data } = await axios.get(routes.dataPath(), options);
+          dispatch(setChannels(data.channels));
+          dispatch(setMessages(data.messages));
+          dispatch(setCurrentChannel(data.currentChannelId));
+        } catch (error) {
+          auth.logOut();
+          navigate('/login');
+          throw error;
+        }
       };
       fetchData();
     }, []);
