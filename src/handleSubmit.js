@@ -10,13 +10,16 @@ export default (auth, navigate, path) => async (values, actions) => {
     auth.logIn(data.username, data.token);
     navigate('/', { replace: true });
   } catch (error) {
-    if (error.response.status === 401) {
-      actions.setErrors({ userNotFound: 'user not found' });
-    }
-    if (error.response.status === 409) {
-      actions.setErrors({ userExist: 'user already exsist' });
-    } else {
-      actions.setErrors({ unknown: 'unknown error' });
+    switch (error.response.status) {
+      case 401:
+        actions.setErrors({ userNotFound: 'user not found' });
+        break;
+      case 409:
+        actions.setErrors({ userExist: 'user already exsist' });
+        break;
+      default:
+        actions.setErrors({ unknown: 'unknown error' });
+        break;
     }
   }
 };
