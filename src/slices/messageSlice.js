@@ -12,10 +12,10 @@ const messageSlice = createSlice({
       const appState = state;
       appState.items = payload;
     },
-    // addMessage: (state, payload) => {
-    //   const appState = state;
-    //   appState.push(payload);
-    // },
+    addMessage: (state, { payload }) => {
+      const appState = state;
+      appState.items.push(payload);
+    },
     // removeMessage: (state, payload) => {
     //   const appState = state;
     //   appState.filter((message) => message.id !== payload.id);
@@ -23,7 +23,7 @@ const messageSlice = createSlice({
   },
 });
 
-export const { setMessages } = messageSlice.actions;
+export const { setMessages, addMessage } = messageSlice.actions;
 
 export default messageSlice.reducer;
 

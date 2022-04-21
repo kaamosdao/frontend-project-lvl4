@@ -22,6 +22,11 @@ class LocalStorageData {
     return token;
   }
 
+  getUsername() {
+    const { username } = JSON.parse(localStorage.getItem(this.key));
+    return username;
+  }
+
   hasAuth() {
     const data = localStorage.getItem(this.key);
     return !!data;
