@@ -26,9 +26,9 @@ deploy:
 
 heropush:
 	git add .
-	git commit -m $(ARGS)
+	git commit -m "$(ARGS)"
 	git push
-	deploy
+	git push heroku main
 
 test:
 	npm test -s
