@@ -24,6 +24,12 @@ publish:npm
 deploy:
 	git push heroku
 
+heropush:
+	git add .
+	git commit -m $(ARGS)
+	git push
+	deploy
+
 test:
 	npm test -s
 
