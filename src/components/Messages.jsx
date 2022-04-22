@@ -27,8 +27,8 @@ function Messages() {
     const input = document.querySelector('.form-control');
     const button = document.querySelector('.form-button');
     // if (!socket.connected) {
-    //   alert('Seems like connection troubles, please try later');
-    //   return;
+    //   errorsSlice or something
+    //   ('Seems like connection troubles, please try later');
     // }
     input.setAttribute('disabled', true);
     button.setAttribute('disabled', true);
