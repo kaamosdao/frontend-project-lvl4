@@ -16,20 +16,41 @@ function Messages() {
   const channel = channels.find((item) => item.id === currentChannelId);
   const messages = useSelector((state) => state.messages.items);
 
-  const [inputValue, setMInputValue] = useState('');
+  const [inputValue, setInputValue] = useState('');
   const handleChange = (event) => {
-    setMInputValue(event.target.value);
+    setInputValue(event.target.value);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const username = localStorageData.getUsername();
-    socket.emit('newMessage', { username, message: inputValue });
-    setMInputValue('');
+    const input = document.querySelector('.form-control');
+    const button = document.querySelector('.form-button');
+    // if (!socket.connected) {
+    //   alert('Seems like connection troubles, please try later');
+    //   return;
+    // }
+    input.setAttribute('disabled', true);
+    button.setAttribute('disabled', true);
+    socket.timeout(5000)
+      .emit('newMessage', { username, message: inputValue, channelId: currentChannelId }, (err) => {
+        if (err) {
+          input.removeAttribute('disabled');
+          button.removeAttribute('disabled');
+        } else {
+          input.removeAttribute('disabled');
+          button.removeAttribute('disabled');
+          setInputValue('');
+        }
+      });
   };
   useEffect(() => {
-    socket.on('newMessage', ({ username, message, id }) => {
-      dispatch(addMessage({ username, message, id }));
+    socket.on('newMessage', ({
+      username, message, id, channelId,
+    }) => {
+      dispatch(addMessage({
+        username, message, id, channelId,
+      }));
     });
   }, [socket]);
 
@@ -42,13 +63,14 @@ function Messages() {
         </p>
       </div>
       <div className="messages-container overflow-auto">
-        {messages.map((item) => (
-          <div className="text-break" key={item.id}>
-            <b>{item.username}</b>
-            &#58;&nbsp;
-            {item.message}
-          </div>
-        ))}
+        {messages.filter((item) => item.channelId === currentChannelId)
+          .map((item) => (
+            <div className="text-break" key={item.id}>
+              <b>{item.username}</b>
+              &#58;&nbsp;
+              {item.message}
+            </div>
+          ))}
       </div>
       <div className="form-message mt-auto">
         <Form onSubmit={handleSubmit} noValidate>
@@ -60,7 +82,7 @@ function Messages() {
               onChange={handleChange}
               value={inputValue}
             />
-            <Button type="submit" variant="outline-dark" id="button-addon1" disabled={!inputValue}>
+            <Button type="submit" variant="outline-dark" id="button-addon1" className="form-button" disabled={!inputValue}>
               Send
             </Button>
           </InputGroup>
