@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import {
   Button, InputGroup, FormControl, Form,
@@ -12,31 +12,35 @@ function Messages() {
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
   const channel = channels.find((item) => item.id === currentChannelId);
   const messages = useSelector((state) => state.messages.items);
-
+  const inputEl = useRef(null);
+  const buttonEl = useRef(null);
   const [inputValue, setInputValue] = useState('');
   const handleChange = (event) => {
     setInputValue(event.target.value);
   };
-
+  useEffect(() => {
+    inputEl.current.focus();
+  });
   const handleSubmit = (event) => {
     event.preventDefault();
     const username = localStorageData.getUsername();
-    const input = document.querySelector('.form-control');
-    const button = document.querySelector('.form-button');
+    // const input = document.querySelector('.form-control');
+    // const button = document.querySelector('.form-button');
     // if (!socket.connected) {
     //   errorsSlice or something
     //   ('Seems like connection troubles, please try later');
     // }
-    input.setAttribute('disabled', true);
-    button.setAttribute('disabled', true);
+    inputEl.current.setAttribute('disabled', true);
+    buttonEl.current.setAttribute('disabled', true);
     app.socket.timeout(5000)
       .emit('newMessage', { username, message: inputValue, channelId: currentChannelId }, (err) => {
         if (err) {
-          input.removeAttribute('disabled');
-          button.removeAttribute('disabled');
+          inputEl.current.removeAttribute('disabled');
+          buttonEl.current.removeAttribute('disabled');
+          inputEl.current.focus();
         } else {
-          input.removeAttribute('disabled');
-          button.removeAttribute('disabled');
+          inputEl.current.removeAttribute('disabled');
+          buttonEl.current.removeAttribute('disabled');
           setInputValue('');
         }
       });
@@ -69,8 +73,10 @@ function Messages() {
               placeholder="Text message..."
               onChange={handleChange}
               value={inputValue}
+              autoFocus
+              ref={inputEl}
             />
-            <Button type="submit" variant="outline-dark" id="button-addon1" className="form-button" disabled={!inputValue}>
+            <Button ref={buttonEl} type="submit" variant="outline-dark" id="button-addon1" className="form-button" disabled={!inputValue}>
               Send
             </Button>
           </InputGroup>
