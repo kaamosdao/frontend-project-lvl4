@@ -4,19 +4,19 @@ import { useFormik } from 'formik';
 import { Form, Button } from 'react-bootstrap';
 import schema from '../validationSchema.js';
 import TextField from './TextField.jsx';
-import useAuth from '../hooks/index.jsx';
+import useAppContext from '../hooks/index.jsx';
 import FormWrapper from './FormWrapper.jsx';
 import handleSubmit from '../handleSubmit.js';
 
 function Signup() {
   const navigate = useNavigate();
-  const auth = useAuth();
+  const app = useAppContext();
   const formik = useFormik({
     initialValues: { login: '', password: '', confirmPassword: '' },
     validationSchema: schema,
-    onSubmit: handleSubmit(auth, navigate, 'signupPath'),
+    onSubmit: handleSubmit(app, navigate, 'signupPath'),
   });
-  if (auth.loggedIn) {
+  if (app.loggedIn) {
     navigate('/', { replace: true });
   }
   return (

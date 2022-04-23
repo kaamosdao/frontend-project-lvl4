@@ -3,19 +3,19 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { Form, Button } from 'react-bootstrap';
 import TextField from './TextField.jsx';
-import useAuth from '../hooks/index.jsx';
+import useAppContext from '../hooks/index.jsx';
 import FormWrapper from './FormWrapper.jsx';
 import handleSubmit from '../handleSubmit.js';
 
 function Login() {
-  const auth = useAuth();
+  const app = useAppContext();
   const navigate = useNavigate();
-  if (auth.loggedIn) {
+  if (app.loggedIn) {
     navigate('/', { replace: true });
   }
   const formik = useFormik({
     initialValues: { login: '', password: '' },
-    onSubmit: handleSubmit(auth, navigate, 'loginPath'),
+    onSubmit: handleSubmit(app, navigate, 'loginPath'),
   });
   return (
     <FormWrapper title="Log in to account">

@@ -1,16 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { io } from 'socket.io-client';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import {
   Button, InputGroup, FormControl, Form,
 } from 'react-bootstrap';
-import { addMessage } from '../slices/messageSlice.js';
+import useAppContext from '../hooks/index.jsx';
 import localStorageData from '../localStorageData.js';
 
-const socket = io();
-
 function Messages() {
-  const dispatch = useDispatch();
+  const app = useAppContext();
   const channels = useSelector((state) => state.channels.items);
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
   const channel = channels.find((item) => item.id === currentChannelId);
@@ -32,7 +29,7 @@ function Messages() {
     // }
     input.setAttribute('disabled', true);
     button.setAttribute('disabled', true);
-    socket.timeout(5000)
+    app.socket.timeout(5000)
       .emit('newMessage', { username, message: inputValue, channelId: currentChannelId }, (err) => {
         if (err) {
           input.removeAttribute('disabled');
@@ -44,15 +41,6 @@ function Messages() {
         }
       });
   };
-  useEffect(() => {
-    socket.on('newMessage', ({
-      username, message, id, channelId,
-    }) => {
-      dispatch(addMessage({
-        username, message, id, channelId,
-      }));
-    });
-  }, [socket]);
 
   return (
     <div className="d-flex flex-column h-100">

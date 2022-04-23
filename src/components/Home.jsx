@@ -5,17 +5,17 @@ import { useDispatch } from 'react-redux';
 import { Col, Container, Row } from 'react-bootstrap';
 import { setChannels, setCurrentChannel } from '../slices/channelSlice.js';
 import { setMessages } from '../slices/messageSlice.js';
-import useAuth from '../hooks/index.jsx';
+import useAppContext from '../hooks/index.jsx';
 import localStorageData from '../localStorageData.js';
 import routes from '../routes.js';
 import Channels from './Channels.jsx';
 import Messages from './Messages.jsx';
 
 function Home() {
-  const auth = useAuth();
+  const app = useAppContext();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  if (auth.loggedIn) {
+  if (app.loggedIn) {
     const token = localStorageData.getToken();
     useEffect(() => {
       const fetchData = async () => {
@@ -30,13 +30,14 @@ function Home() {
           dispatch(setMessages(data.messages));
           dispatch(setCurrentChannel(data.currentChannelId));
         } catch (error) {
-          auth.logOut();
+          app.logOut();
           navigate('/login');
           throw error;
         }
       };
       fetchData();
     }, []);
+
     return (
       <Container className="h-100 my-4 overflow-hidden rounded shadow">
         <Row className="h-100 bg-white flex-md-row">
