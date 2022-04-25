@@ -15,6 +15,7 @@ function Home() {
   const app = useAppContext();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  // alert(modalAction);
   if (app.loggedIn) {
     const token = localStorageData.getToken();
     useEffect(() => {
@@ -41,14 +42,13 @@ function Home() {
     return (
       <Container className="h-100 my-4 overflow-hidden rounded shadow">
         <Row className="h-100 bg-white flex-md-row">
-          <Col md={2} className="border-end">
+          <Col md={2} className="col-4 border-end px-2">
             <Channels />
           </Col>
           <Col className="h-100">
             <Messages />
           </Col>
         </Row>
-
       </Container>
     );
   }

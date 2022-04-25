@@ -17,10 +17,13 @@ const channelSlice = createSlice({
       const appState = state;
       appState.currentChannelId = payload;
     },
+    removeChannel: () => {
+
+    },
   },
 });
 
-export const { setChannels, setCurrentChannel } = channelSlice.actions;
+export const { setChannels, setCurrentChannel, removeChannel } = channelSlice.actions;
 
 export default channelSlice.reducer;
 

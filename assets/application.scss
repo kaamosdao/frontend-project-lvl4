@@ -4,3 +4,23 @@
 .nav-link:hover {
   opacity: 0.75;
 }
+
+.dropdown .btn:first-child {
+  @extend .text-truncate;
+  @extend .text-start;
+  @extend .rounded-0;
+}
+
+.btn-addChannel {
+  font-weight: bold;
+  color: #3f52ff;
+  padding: 0 6px;
+  border-width: 2px;
+  border-color: #3f52ff;
+}
+
+.btn-addChannel:hover {
+  color: #3f52ff;
+  border-color: #3f52ff;
+  opacity: 0.8;
+}
