@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Provider, useDispatch } from 'react-redux';
+import { Provider, useDispatch, useSelector } from 'react-redux';
 import { io } from 'socket.io-client';
 import store from './slices/index.js';
 import Home from './components/Home.jsx';
@@ -12,26 +12,37 @@ import About from './components/About.jsx';
 import AppContext from './Context.jsx';
 import localStorageData from './localStorageData.js';
 import { addMessage } from './slices/messageSlice.js';
+import { addChannel, setCurrentChannel, removeChannel } from './slices/channelSlice.js';
+import getModal from './getModal.js';
 
 function setSocketEvents(socket, dispatch, actions) {
   useEffect(() => {
-    socket.on('newMessage', ({
-      username, message, id, channelId,
-    }) => {
-      dispatch(actions.addMessage({
-        username, message, id, channelId,
-      }));
+    socket.on('newMessage', (data) => {
+      dispatch(actions.addMessage(data));
+    });
+    socket.on('newChannel', (data) => {
+      dispatch(actions.addChannel(data));
+      dispatch(actions.setCurrentChannel(data.id));
+    });
+    socket.on('removeChannel', (data) => {
+      dispatch(actions.removeChannel(data));
+      dispatch(actions.setCurrentChannel(1));
     });
   }, [socket]);
 }
 
 const socket = io();
 
+const actions = {
+  addMessage, addChannel, setCurrentChannel, removeChannel,
+};
+
 function AppProvider({ children }) {
   const isLogined = localStorageData.hasAuth();
   const [loggedIn, setLoggedIn] = useState(isLogined);
   const dispatch = useDispatch();
-  setSocketEvents(socket, dispatch, { addMessage });
+  const modalAction = useSelector((state) => state.modal.action);
+  setSocketEvents(socket, dispatch, actions);
   const logIn = (username, token) => {
     localStorageData.setAuth(username, token);
     setLoggedIn(true);
@@ -46,6 +57,7 @@ function AppProvider({ children }) {
   return (
     <AppContext.Provider value={providerData}>
       {children}
+      {modalAction && getModal(modalAction)}
     </AppContext.Provider>
   );
 }

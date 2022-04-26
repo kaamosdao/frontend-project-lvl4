@@ -15,7 +15,6 @@ function Home() {
   const app = useAppContext();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // alert(modalAction);
   if (app.loggedIn) {
     const token = localStorageData.getToken();
     useEffect(() => {

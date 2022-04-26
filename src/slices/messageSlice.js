@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { removeChannel } from './channelSlice.js';
 
 const initialState = {
   items: [],
@@ -16,10 +17,12 @@ const messageSlice = createSlice({
       const appState = state;
       appState.items.push(payload);
     },
-    // removeMessage: (state, payload) => {
-    //   const appState = state;
-    //   appState.filter((message) => message.id !== payload.id);
-    // },
+    extraReducers: (builder) => {
+      builder.addCase(removeChannel, (state, { payload }) => {
+        const appState = state;
+        appState.items = state.items.filter((message) => message.channelId !== payload.id);
+      });
+    },
   },
 });
 

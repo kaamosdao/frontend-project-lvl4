@@ -1,16 +1,13 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { Outlet, Link, useNavigate } from 'react-router-dom';
 import {
   Navbar, Container, Nav, Button,
 } from 'react-bootstrap';
 import useAuth from '../hooks/index.jsx';
-import getModal from '../getModal.js';
 
 function Layout() {
   const auth = useAuth();
   const navigate = useNavigate();
-  const modalAction = useSelector((state) => state.modal.action);
   const logoutButton = (
     <Nav.Link
       as={Button}
@@ -36,7 +33,6 @@ function Layout() {
         </Container>
       </Navbar>
       <Outlet />
-      {modalAction && getModal(modalAction)}
     </div>
   );
 }

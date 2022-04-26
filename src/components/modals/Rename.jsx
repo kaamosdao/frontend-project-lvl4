@@ -3,12 +3,12 @@ import { useDispatch } from 'react-redux';
 import {
   Button, Modal,
 } from 'react-bootstrap';
-import { removeModalAction } from '../../slices/modalSlice.js';
+import { hideModal } from '../../slices/modalSlice.js';
 
 function Rename() {
   const dispatch = useDispatch();
   const handleClose = () => {
-    dispatch(removeModalAction());
+    dispatch(hideModal());
   };
   return (
     <Modal

@@ -24,8 +24,6 @@ function Messages() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const username = localStorageData.getUsername();
-    // const input = document.querySelector('.form-control');
-    // const button = document.querySelector('.form-button');
     // if (!socket.connected) {
     //   errorsSlice or something
     //   ('Seems like connection troubles, please try later');
