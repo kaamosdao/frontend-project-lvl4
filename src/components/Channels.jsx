@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  Button, SplitButton, Nav, Dropdown,
+  Button, SplitButton, Nav, Dropdown, ButtonGroup,
 } from 'react-bootstrap';
 import { setCurrentChannel } from '../slices/channelSlice.js';
 import { setModalInfo } from '../slices/modalSlice.js';
@@ -26,17 +26,25 @@ function Channels() {
         <span className="channels-title">Channels</span>
         <Button onClick={() => showModal('adding')} variant="outline-light" className="btn-addChannel" size="sm">+</Button>
       </div>
-      <Nav as="ul">
+      <Nav as="ul" className="">
         {channels.map((item) => {
           const isCurrentChannel = item.id === currentChannelId;
           const variantValue = isCurrentChannel ? 'secondary' : '';
           if (item.removable) {
             return (
               <Nav.Item as="li" key={item.id} className="w-100">
-                <SplitButton onClick={toggleCurrentChannel} title={`# ${item.name}`} variant={variantValue} className="text-start rounded-0 w-100" id="segmented-button-dropdown-1">
-                  <Dropdown.Item onClick={() => showModal('deleting', item)} href="#" role="button">Delete</Dropdown.Item>
-                  <Dropdown.Item onClick={() => showModal('renaming', item)} href="#" role="button">Rename</Dropdown.Item>
-                </SplitButton>
+                <Dropdown as={ButtonGroup} className="w-100">
+                  <Button variant={variantValue} className="text-start rounded-0 w-100" onClick={toggleCurrentChannel}>
+                    {`# ${item.name}`}
+                  </Button>
+
+                  <Dropdown.Toggle split variant={variantValue} id="dropdown-split-basic" />
+
+                  <Dropdown.Menu style={{ 'min-width': '7rem' }}>
+                    <Dropdown.Item href="#" role="button" onClick={() => showModal('deleting', item)}>Remove</Dropdown.Item>
+                    <Dropdown.Item href="#" role="button" onClick={() => showModal('renaming', item)}>Rename</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
               </Nav.Item>
             );
           }
