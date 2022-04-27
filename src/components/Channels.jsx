@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  Button, SplitButton, Nav, Dropdown, ButtonGroup,
+  Button, Nav, Dropdown, ButtonGroup,
 } from 'react-bootstrap';
 import { setCurrentChannel } from '../slices/channelSlice.js';
 import { setModalInfo } from '../slices/modalSlice.js';
