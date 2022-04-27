@@ -25,7 +25,7 @@ function Layout() {
     <div className="d-flex flex-column h-100">
       <Navbar bg="dark" variant="dark" className="text-white">
         <Container>
-          <Navbar.Brand as={Link} to="/" className="px-3 ms-3">MESSENGER</Navbar.Brand>
+          <Navbar.Brand as={Link} to="/" className="px-3 ms-3">Hexlet Chat</Navbar.Brand>
           <Nav>
             {auth.loggedIn ? logoutButton : ''}
             <Nav.Link as={Link} to="/about" className="active text-reset me-3">About</Nav.Link>

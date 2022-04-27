@@ -10,6 +10,7 @@ export const channelsSchema = yup.object().shape({
 export default yup.object().shape({
   login: yup.string()
     .min(3, 'must be at least 3 characters')
+    .max(20, 'must be less than 20 characters')
     .required('login is required'),
   password: yup.string()
     .min(6, 'must be at least 6 characters')
