@@ -12,7 +12,9 @@ import About from './components/About.jsx';
 import AppContext from './Context.jsx';
 import localStorageData from './localStorageData.js';
 import { addMessage } from './slices/messageSlice.js';
-import { addChannel, setCurrentChannel, removeChannel } from './slices/channelSlice.js';
+import {
+  addChannel, setCurrentChannel, removeChannel, renameChannel,
+} from './slices/channelSlice.js';
 import getModal from './getModal.js';
 
 function setSocketEvents(socket, dispatch, actions) {
@@ -28,13 +30,16 @@ function setSocketEvents(socket, dispatch, actions) {
       dispatch(actions.removeChannel(data));
       dispatch(actions.setCurrentChannel(1));
     });
+    socket.on('renameChannel', (data) => {
+      dispatch(actions.renameChannel(data));
+    });
   }, [socket]);
 }
 
 const socket = io();
 
 const actions = {
-  addMessage, addChannel, setCurrentChannel, removeChannel,
+  addMessage, addChannel, setCurrentChannel, removeChannel, renameChannel,
 };
 
 function AppProvider({ children }) {

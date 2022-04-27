@@ -11,6 +11,10 @@
   @extend .rounded-0;
 }
 
+.dropdown-toggle {
+  @extend .flex-grow-0;
+}
+
 .btn-addChannel {
   font-weight: bold;
   color: #3f52ff;
