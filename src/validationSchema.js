@@ -2,20 +2,20 @@ import * as yup from 'yup';
 
 export const channelsSchema = yup.object().shape({
   channel: yup.string()
-    .min(3, 'must be at least 3 characters')
-    .max(10, 'must be less than 10 characters')
-    .required('must not be empty'),
+    .min(3, 'feedbackMessages.errors.channels.min')
+    .max(10, 'feedbackMessages.errors.channels.max')
+    .required('feedbackMessages.errors.channels.empty'),
 });
 
 export default yup.object().shape({
   login: yup.string()
-    .min(3, 'must be at least 3 characters')
-    .max(20, 'must be less than 20 characters')
-    .required('login is required'),
+    .min(3, 'feedbackMessages.errors.login.min')
+    .max(20, 'feedbackMessages.errors.login.max')
+    .required('feedbackMessages.errors.required'),
   password: yup.string()
-    .min(6, 'must be at least 6 characters')
-    .required('password is required'),
+    .min(6, 'feedbackMessages.errors.password.min')
+    .required('feedbackMessages.errors.required'),
   confirmPassword: yup.string()
-    .oneOf([yup.ref('password')], 'password must match')
-    .required('confirm password is required'),
+    .oneOf([yup.ref('password')], 'feedbackMessages.errors.confirmPassword.match')
+    .required('feedbackMessages.errors.required'),
 });

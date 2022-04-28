@@ -12,13 +12,13 @@ export default (auth, navigate, path) => async (values, actions) => {
   } catch (error) {
     switch (error.response.status) {
       case 401:
-        actions.setErrors({ userNotFound: 'user not found' });
+        actions.setErrors({ userNotFound: 'feedbackMessages.errors.userNotFound' });
         break;
       case 409:
-        actions.setErrors({ userExist: 'user already exsist' });
+        actions.setErrors({ userExist: 'feedbackMessages.errors.userExist' });
         break;
       default:
-        actions.setErrors({ unknown: 'unknown error' });
+        actions.setErrors({ unknown: 'feedbackMessages.errors.unknown' });
         break;
     }
   }

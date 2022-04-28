@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   Button, Nav, Dropdown, ButtonGroup,
 } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import { setCurrentChannel } from '../slices/channelSlice.js';
 import { setModalInfo } from '../slices/modalSlice.js';
 
@@ -10,6 +11,7 @@ function Channels() {
   const channels = useSelector((state) => state.channels.items);
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const toggleCurrentChannel = (event) => {
     event.preventDefault();
     const channelName = event.target.textContent.slice(2);
@@ -23,7 +25,7 @@ function Channels() {
   return (
     <>
       <div className="d-flex justify-content-between mb-2 ps-2">
-        <span className="channels-title">Channels</span>
+        <span className="channels-title">{t('homePage.channels.title')}</span>
         <Button onClick={() => showModal('adding')} variant="outline-light" className="btn-addChannel" size="sm">+</Button>
       </div>
       <Nav as="ul" className="">
@@ -40,9 +42,9 @@ function Channels() {
 
                   <Dropdown.Toggle split variant={variantValue} id="dropdown-split-basic" />
 
-                  <Dropdown.Menu style={{ 'min-width': '7rem' }}>
-                    <Dropdown.Item href="#" role="button" onClick={() => showModal('deleting', item)}>Remove</Dropdown.Item>
-                    <Dropdown.Item href="#" role="button" onClick={() => showModal('renaming', item)}>Rename</Dropdown.Item>
+                  <Dropdown.Menu>
+                    <Dropdown.Item href="#" role="button" onClick={() => showModal('deleting', item)}>{t('homePage.channels.dropdownRemove')}</Dropdown.Item>
+                    <Dropdown.Item href="#" role="button" onClick={() => showModal('renaming', item)}>{t('homePage.channels.dropdownRename')}</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
               </Nav.Item>

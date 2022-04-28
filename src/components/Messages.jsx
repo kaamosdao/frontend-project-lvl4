@@ -3,11 +3,13 @@ import { useSelector } from 'react-redux';
 import {
   Button, InputGroup, FormControl, Form,
 } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import useAppContext from '../hooks/index.jsx';
 import localStorageData from '../localStorageData.js';
 
 function Messages() {
   const app = useAppContext();
+  const { t } = useTranslation();
   const channels = useSelector((state) => state.channels.items);
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
   const channel = channels.find((item) => item.id === currentChannelId);
@@ -68,14 +70,14 @@ function Messages() {
             <FormControl
               aria-label="New message"
               aria-describedby="basic-addon1"
-              placeholder="Text message..."
+              placeholder={t('homePage.messages.inputPlaceholder')}
               onChange={handleChange}
               value={inputValue}
               autoFocus
               ref={inputEl}
             />
             <Button ref={buttonEl} type="submit" variant="outline-dark" id="button-addon1" className="form-button" disabled={!inputValue}>
-              Send
+              {t('homePage.messages.sendButton')}
             </Button>
           </InputGroup>
         </Form>

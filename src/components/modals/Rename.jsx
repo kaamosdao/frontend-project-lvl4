@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   Button, Modal, Form,
 } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import { hideModal } from '../../slices/modalSlice.js';
 import TextField from './ChannelTextfield.jsx';
@@ -11,8 +12,9 @@ import useAppContext from '../../hooks/index.jsx';
 
 function Rename() {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const channels = useSelector((state) => state.channels.items);
-  const { id } = useSelector((state) => state.modal.item);
+  const { id, name } = useSelector((state) => state.modal.item);
   const inputRef = React.createRef();
   const formRef = useRef(null);
   const app = useAppContext();
@@ -23,7 +25,7 @@ function Rename() {
     dispatch(hideModal());
   };
   const formik = useFormik({
-    initialValues: { channel: '' },
+    initialValues: { channel: name },
     validationSchema: channelsSchema,
     onSubmit: (values, actions) => {
       const isAlreadyExist = channels.find((item) => item.name === values.channel);
@@ -59,12 +61,12 @@ function Rename() {
       <Form ref={formRef} onSubmit={formik.handleSubmit} className="w-100 m-auto mb-4 p-0">
         <Modal.Header className="border-0" closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            Rename Channel
+            {t('modals.rename.title')}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <TextField
-            label="Channel"
+            label={t('modals.rename.input')}
             id="channel"
             type="text"
             onChange={formik.handleChange}
@@ -76,8 +78,8 @@ function Rename() {
           />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" type="submit">Rename channel</Button>
-          <Button variant="secondary" onClick={handleClose}>Close</Button>
+          <Button variant="primary" type="submit">{t('modals.rename.submitButton')}</Button>
+          <Button variant="secondary" onClick={handleClose}>{t('modals.rename.closeButton')}</Button>
         </Modal.Footer>
       </Form>
     </Modal>
