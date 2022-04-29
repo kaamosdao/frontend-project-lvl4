@@ -1,5 +1,7 @@
 import axios from 'axios';
+import i18nInstance from './i18n.js';
 import routes from './routes.js';
+import showToast from './showToast.js';
 
 export default (auth, navigate, path) => async (values, actions) => {
   try {
@@ -10,6 +12,10 @@ export default (auth, navigate, path) => async (values, actions) => {
     auth.logIn(data.username, data.token);
     navigate('/', { replace: true });
   } catch (error) {
+    if (error.message === 'Network Error') {
+      showToast(i18nInstance.t('feedbackMessages.errors.network'), 'error');
+      return;
+    }
     switch (error.response.status) {
       case 401:
         actions.setErrors({ userNotFound: 'feedbackMessages.errors.userNotFound' });

@@ -60,12 +60,18 @@ export default {
     },
     feedbackMessages: {
       default: '',
+      channel: {
+        added: 'Канал добавлен!',
+        removed: 'Канал удален!',
+        renamed: 'Канал переименован!',
+      },
       errors: {
         network: 'Ошибка сети. Попробуйте позже.',
         userExist: 'Пользователь уже существует',
         userNotFound: 'Пользователь не найден',
         required: 'Обязательное поле',
         unknown: 'Неизвестная ошибка',
+        response: 'Нет ответа от сервера',
         login: {
           min: 'Не менее 3 символов',
           max: 'Не более 20 символов',

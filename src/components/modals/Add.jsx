@@ -9,6 +9,7 @@ import { hideModal } from '../../slices/modalSlice.js';
 import TextField from './ChannelTextfield.jsx';
 import { channelsSchema } from '../../validationSchema.js';
 import useAppContext from '../../hooks/index.jsx';
+import showToast from '../../showToast.js';
 
 function Add() {
   const dispatch = useDispatch();
@@ -33,19 +34,25 @@ function Add() {
         inputRef.current.focus();
         return;
       }
+      if (!app.socket.connected) {
+        showToast(t('feedbackMessages.errors.network'), 'error');
+        inputRef.current.focus();
+        return;
+      }
       Array.from(formRef.current.elements).forEach((element) => {
         element.setAttribute('disabled', true);
       });
       app.socket.timeout(5000)
         .emit('newChannel', { name: values.channel }, (err) => {
           if (err) {
-            inputRef.current.focus();
+            Array.from(formRef.current.elements).forEach((element) => {
+              element.removeAttribute('disabled');
+            });
+            showToast(t('feedbackMessages.errors.response'), 'warn');
           } else {
             dispatch(hideModal());
+            showToast(t('feedbackMessages.channel.added'), 'success');
           }
-          Array.from(formRef.current.elements).forEach((element) => {
-            element.removeAttribute('disabled');
-          });
         });
     },
   });

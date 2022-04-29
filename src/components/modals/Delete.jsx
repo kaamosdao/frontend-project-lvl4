@@ -6,6 +6,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { hideModal } from '../../slices/modalSlice.js';
 import useAppContext from '../../hooks/index.jsx';
+import showToast from '../../showToast.js';
 
 function Delete() {
   const dispatch = useDispatch();
@@ -20,6 +21,10 @@ function Delete() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (!app.socket.connected) {
+      showToast(t('feedbackMessages.errors.network'), 'error');
+      return;
+    }
     Array.from(formRef.current.elements).forEach((element) => {
       element.setAttribute('disabled', true);
     });
@@ -29,8 +34,10 @@ function Delete() {
           Array.from(formRef.current.elements).forEach((element) => {
             element.removeAttribute('disabled');
           });
+          showToast(t('feedbackMessages.errors.response'), 'warn');
         } else {
           dispatch(hideModal());
+          showToast(t('feedbackMessages.channel.removed'), 'success');
         }
       });
   };

@@ -6,6 +6,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import useAppContext from '../hooks/index.jsx';
 import localStorageData from '../localStorageData.js';
+import showToast from '../showToast.js';
 
 function Messages() {
   const app = useAppContext();
@@ -26,10 +27,9 @@ function Messages() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const username = localStorageData.getUsername();
-    // if (!socket.connected) {
-    //   errorsSlice or something
-    //   ('Seems like connection troubles, please try later');
-    // }
+    if (!app.socket.connected) {
+      showToast(t('feedbackMessages.errors.network'), 'error');
+    }
     inputEl.current.setAttribute('disabled', true);
     buttonEl.current.setAttribute('disabled', true);
     app.socket.timeout(5000)
@@ -38,6 +38,7 @@ function Messages() {
           inputEl.current.removeAttribute('disabled');
           buttonEl.current.removeAttribute('disabled');
           inputEl.current.focus();
+          showToast(t('feedbackMessages.errors.response'), 'warn');
         } else {
           inputEl.current.removeAttribute('disabled');
           buttonEl.current.removeAttribute('disabled');

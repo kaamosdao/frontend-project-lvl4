@@ -60,12 +60,18 @@ export default {
     },
     feedbackMessages: {
       default: '',
+      channel: {
+        added: 'Channel added!',
+        removed: 'Channel removed!',
+        renamed: 'Channel renamed!',
+      },
       errors: {
-        network: 'Network Problems. Try again.',
+        network: 'Network Problems. Try later.',
         userExist: 'user already exsist',
         userNotFound: 'user not found',
         required: 'required field',
         unknown: 'unknown error',
+        response: 'No response from server',
         login: {
           min: 'must be at least 3 characters',
           max: 'must be less than 20 characters',

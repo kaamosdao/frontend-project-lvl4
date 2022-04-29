@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { io } from 'socket.io-client';
+import { ToastContainer } from 'react-toastify';
 import store from './slices/index.js';
 import Home from './components/Home.jsx';
 import Login from './components/Login.jsx';
@@ -63,6 +64,7 @@ function AppProvider({ children }) {
     <AppContext.Provider value={providerData}>
       {children}
       {modalAction && getModal(modalAction)}
+      <ToastContainer />
     </AppContext.Provider>
   );
 }
