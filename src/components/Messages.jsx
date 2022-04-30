@@ -61,7 +61,7 @@ function Messages() {
             <div className="text-break" key={item.id}>
               <b>{item.username}</b>
               &#58;&nbsp;
-              {item.message}
+              {app.filter.clean(item.message)}
             </div>
           ))}
       </div>

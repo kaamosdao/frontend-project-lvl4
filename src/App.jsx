@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { io } from 'socket.io-client';
 import { ToastContainer } from 'react-toastify';
+import filter from 'leo-profanity';
 import store from './slices/index.js';
 import Home from './components/Home.jsx';
 import Login from './components/Login.jsx';
@@ -17,6 +18,8 @@ import {
   addChannel, setCurrentChannel, removeChannel, renameChannel,
 } from './slices/channelSlice.js';
 import getModal from './getModal.js';
+
+filter.add(filter.getDictionary('ru'));
 
 function setSocketEvents(socket, dispatch, actions) {
   useEffect(() => {
@@ -58,7 +61,7 @@ function AppProvider({ children }) {
     setLoggedIn(false);
   };
   const providerData = useMemo(() => ({
-    loggedIn, logIn, logOut, socket,
+    loggedIn, logIn, logOut, socket, filter,
   }), [loggedIn]);
   return (
     <AppContext.Provider value={providerData}>
