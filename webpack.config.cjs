@@ -13,6 +13,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'dist', 'public'),
     publicPath: '/assets/',
+    // crossOriginLoading: false, // 'anonymous'
   },
   devServer: {
     compress: true,
@@ -21,6 +22,7 @@ module.exports = {
     // publicPath: '/assets/',
     historyApiFallback: true,
   },
+  // devtool: 'cheap-module-source-map',
   plugins: [
     new MiniCssExtractPlugin(),
   ],

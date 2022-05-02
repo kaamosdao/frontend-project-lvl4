@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Provider, useDispatch, useSelector } from 'react-redux';
+import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 import { io } from 'socket.io-client';
 import { ToastContainer } from 'react-toastify';
 import filter from 'leo-profanity';
@@ -18,6 +19,13 @@ import {
   addChannel, setCurrentChannel, removeChannel, renameChannel,
 } from './slices/channelSlice.js';
 import getModal from './getModal.js';
+
+const rollbarConfig = {
+  accessToken: '052b1dddfbaa4161b0315e1f3ec380d5',
+  captureUncaught: true,
+  captureUnhandledRejections: true,
+  environment: 'production',
+};
 
 filter.add(filter.getDictionary('ru'));
 
@@ -74,21 +82,25 @@ function AppProvider({ children }) {
 
 function App() {
   return (
-    <Provider store={store}>
-      <AppProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<Home />} />
-              <Route path="login" element={<Login />} />
-              <Route path="signup" element={<Signup />} />
-              <Route path="about" element={<About />} />
-              <Route path="*" element={<Notfound />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </AppProvider>
-    </Provider>
+    <RollbarProvider config={rollbarConfig}>
+      <ErrorBoundary>
+        <Provider store={store}>
+          <AppProvider>
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Layout />}>
+                  <Route index element={<Home />} />
+                  <Route path="login" element={<Login />} />
+                  <Route path="signup" element={<Signup />} />
+                  <Route path="about" element={<About />} />
+                  <Route path="*" element={<Notfound />} />
+                </Route>
+              </Routes>
+            </BrowserRouter>
+          </AppProvider>
+        </Provider>
+      </ErrorBoundary>
+    </RollbarProvider>
   );
 }
 

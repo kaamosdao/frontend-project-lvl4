@@ -13,6 +13,9 @@ function About() {
   const onToast = () => {
     showToast('🦄 Wow so easy!', 'error');
   };
+  const sendError = () => {
+    throw new Error('Rollbar Test Error');
+  };
   return (
     <div className="card text-center w-75 mt-5 mx-auto shadow-sm">
       <div className="card-body">
@@ -21,6 +24,7 @@ function About() {
         <p className="card-text">{t('aboutPage.body.gratitude')}</p>
         <button className="btn btn-info" type="button" onClick={onClick}>{i18n.language}</button>
         <button className="btn btn-primary" type="button" onClick={onToast}>Toast me!</button>
+        <button className="btn btn-warning" type="button" onClick={sendError}>Error me!</button>
       </div>
     </div>
   );
