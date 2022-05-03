@@ -16,7 +16,7 @@ function TextField({
   const isPassword = props.id === 'password';
 
   return (
-    <FloatingLabel label={label} className="form-floating mb-4">
+    <FloatingLabel controlId={props.id} label={label} className="form-floating mb-4">
       <Form.Control className={inputClass} {...props} placeholder={label} />
       <div className="invalid-tooltip">
         {!isServerError && touched && t(error)}
