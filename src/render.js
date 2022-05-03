@@ -1,7 +1,7 @@
 // @ts-check
 import ReactDOM from 'react-dom/client';
 import { io } from 'socket.io-client';
-import init from './index.jsx';
+import init from './index.js';
 import 'core-js/stable/index.js';
 import 'regenerator-runtime/runtime.js';
 import 'react-toastify/dist/ReactToastify.css';
