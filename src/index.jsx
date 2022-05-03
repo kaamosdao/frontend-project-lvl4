@@ -16,7 +16,7 @@ import AuthContext from './hooks/AuthContext.jsx';
 import SocketContext from './hooks/SocketContext.jsx';
 import FilterContext from './hooks/FilterContext.jsx';
 import localStorageData from './localStorageData.js';
-import getModal from './getModal.js';
+import getModal from './getModal.jsx';
 
 function AuthProvider({ children }) {
   const isLogined = localStorageData.hasAuth();
