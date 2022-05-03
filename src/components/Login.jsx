@@ -31,7 +31,7 @@ function Login() {
           value={formik.values.login}
           touched={formik.touched.login}
           error={formik.errors.userNotFound}
-          autocomplete="username"
+          autoComplete="username"
           required
         />
         <TextField
@@ -43,7 +43,7 @@ function Login() {
           value={formik.values.password}
           touched={formik.touched.password}
           error={formik.errors.userNotFound}
-          autocomplete="current-password"
+          autoComplete="current-password"
           required
         />
         <Button type="submit" variant="primary" className="w-100 mb-3 p-3">
