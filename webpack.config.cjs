@@ -10,19 +10,18 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
   },
+  entry: './src/render.js',
   output: {
     path: path.join(__dirname, 'dist', 'public'),
     publicPath: '/assets/',
-    // crossOriginLoading: false, // 'anonymous'
   },
   devServer: {
     compress: true,
     port: 8090,
     host: '0.0.0.0',
-    // publicPath: '/assets/',
     historyApiFallback: true,
   },
-  // devtool: 'cheap-module-source-map',
+  devtool: mode === 'development' ? 'cheap-module-source-map' : 'source-map',
   plugins: [
     new MiniCssExtractPlugin(),
   ],

@@ -4,12 +4,13 @@ import {
   Button, InputGroup, FormControl, Form,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import useAppContext from '../hooks/index.jsx';
+import { useFilter, useSocket } from '../hooks/index.jsx';
 import localStorageData from '../localStorageData.js';
 import showToast from '../showToast.js';
 
 function Messages() {
-  const app = useAppContext();
+  const { socket } = useSocket();
+  const { filter } = useFilter();
   const { t } = useTranslation();
   const channels = useSelector((state) => state.channels.items);
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
@@ -27,12 +28,12 @@ function Messages() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const username = localStorageData.getUsername();
-    if (!app.socket.connected) {
+    if (!socket.connected) {
       showToast(t('feedbackMessages.errors.network'), 'error');
     }
     inputEl.current.setAttribute('disabled', true);
     buttonEl.current.setAttribute('disabled', true);
-    app.socket.timeout(5000)
+    socket.timeout(5000)
       .emit('newMessage', { username, message: inputValue, channelId: currentChannelId }, (err) => {
         if (err) {
           inputEl.current.removeAttribute('disabled');
@@ -61,7 +62,7 @@ function Messages() {
             <div className="text-break" key={item.id}>
               <b>{item.username}</b>
               &#58;&nbsp;
-              {app.filter.clean(item.message)}
+              {filter.clean(item.message)}
             </div>
           ))}
       </div>

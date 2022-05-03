@@ -5,30 +5,30 @@ import {
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { hideModal } from '../../slices/modalSlice.js';
-import useAppContext from '../../hooks/index.jsx';
+import { useSocket } from '../../hooks/index.jsx';
 import showToast from '../../showToast.js';
 
 function Delete() {
   const dispatch = useDispatch();
+  const { socket } = useSocket();
   const { t } = useTranslation();
   const { id } = useSelector((state) => state.modal.item);
   const formRef = useRef(null);
 
-  const app = useAppContext();
   const handleClose = () => {
     dispatch(hideModal());
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (!app.socket.connected) {
+    if (!socket.connected) {
       showToast(t('feedbackMessages.errors.network'), 'error');
       return;
     }
     Array.from(formRef.current.elements).forEach((element) => {
       element.setAttribute('disabled', true);
     });
-    app.socket.timeout(5000)
+    socket.timeout(5000)
       .emit('removeChannel', { id }, (err) => {
         if (err) {
           Array.from(formRef.current.elements).forEach((element) => {

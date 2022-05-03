@@ -86,6 +86,7 @@ export default {
           min: 'must be at least 3 characters',
           max: 'must be less than 10 characters',
           empty: 'must not be empty',
+          exist: 'Channel already exsist',
         },
       },
     },

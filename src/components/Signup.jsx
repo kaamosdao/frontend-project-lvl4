@@ -4,21 +4,21 @@ import { useFormik } from 'formik';
 import { Form, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import schema from '../validationSchema.js';
+import useAuth from '../hooks/index.jsx';
 import TextField from './TextField.jsx';
-import useAppContext from '../hooks/index.jsx';
 import FormWrapper from './FormWrapper.jsx';
 import handleSubmit from '../handleSubmit.js';
 
 function Signup() {
   const navigate = useNavigate();
-  const app = useAppContext();
+  const auth = useAuth();
   const { t } = useTranslation();
   const formik = useFormik({
     initialValues: { login: '', password: '', confirmPassword: '' },
     validationSchema: schema,
-    onSubmit: handleSubmit(app, navigate, 'signupPath'),
+    onSubmit: handleSubmit(auth, navigate, 'signupPath'),
   });
-  if (app.loggedIn) {
+  if (auth.loggedIn) {
     navigate('/', { replace: true });
   }
   return (

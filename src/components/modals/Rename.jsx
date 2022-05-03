@@ -8,7 +8,7 @@ import { useFormik } from 'formik';
 import { hideModal } from '../../slices/modalSlice.js';
 import TextField from './ChannelTextfield.jsx';
 import { channelsSchema } from '../../validationSchema.js';
-import useAppContext from '../../hooks/index.jsx';
+import { useSocket } from '../../hooks/index.jsx';
 import showToast from '../../showToast.js';
 
 function Rename() {
@@ -18,7 +18,7 @@ function Rename() {
   const { id, name } = useSelector((state) => state.modal.item);
   const inputRef = React.createRef();
   const formRef = useRef(null);
-  const app = useAppContext();
+  const { socket } = useSocket();
   useEffect(() => {
     inputRef.current.focus();
   });
@@ -31,11 +31,11 @@ function Rename() {
     onSubmit: (values, actions) => {
       const isAlreadyExist = channels.find((item) => item.name === values.channel);
       if (isAlreadyExist) {
-        actions.setErrors({ channelExist: 'channel already exsist' });
+        actions.setErrors({ channelExist: t('feedbackMessages.errors.channels.exist') });
         inputRef.current.focus();
         return;
       }
-      if (!app.socket.connected) {
+      if (!socket.connected) {
         showToast(t('feedbackMessages.errors.network'), 'error');
         inputRef.current.focus();
         return;
@@ -43,7 +43,7 @@ function Rename() {
       Array.from(formRef.current.elements).forEach((element) => {
         element.setAttribute('disabled', true);
       });
-      app.socket.timeout(5000)
+      socket.timeout(5000)
         .emit('renameChannel', { id, name: values.channel }, (err) => {
           if (err) {
             Array.from(formRef.current.elements).forEach((element) => {

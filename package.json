@@ -1,8 +1,8 @@
 {
   "name": "@hexlet/code",
   "version": "0.0.1",
-  "description": "",
-  "main": "server/plugin.js",
+  "description": "Simple messenger",
+  "main": "src/index.js",
   "type": "module",
   "scripts": {
     "test": "jest",

@@ -8,53 +8,54 @@ import { useFormik } from 'formik';
 import { hideModal } from '../../slices/modalSlice.js';
 import TextField from './ChannelTextfield.jsx';
 import { channelsSchema } from '../../validationSchema.js';
-import useAppContext from '../../hooks/index.jsx';
+import { useSocket } from '../../hooks/index.jsx';
 import showToast from '../../showToast.js';
 
 function Add() {
   const dispatch = useDispatch();
+  const { socket } = useSocket();
   const { t } = useTranslation();
   const channels = useSelector((state) => state.channels.items);
   const inputRef = React.createRef();
   const formRef = useRef(null);
-  const app = useAppContext();
   useEffect(() => {
     inputRef.current.focus();
   });
   const handleClose = () => {
     dispatch(hideModal());
   };
+  const handleSubmit = (values, actions) => {
+    const isAlreadyExist = channels.find((item) => item.name === values.channel);
+    if (isAlreadyExist) {
+      actions.setErrors({ channelExist: t('feedbackMessages.errors.channels.exist') });
+      inputRef.current.focus();
+      return;
+    }
+    if (!socket.connected) {
+      showToast(t('feedbackMessages.errors.network'), 'error');
+      inputRef.current.focus();
+      return;
+    }
+    Array.from(formRef.current.elements).forEach((element) => {
+      element.setAttribute('disabled', true);
+    });
+    socket.timeout(5000)
+      .emit('newChannel', { name: values.channel }, (err) => {
+        if (err) {
+          Array.from(formRef.current.elements).forEach((element) => {
+            element.removeAttribute('disabled');
+          });
+          showToast(t('feedbackMessages.errors.response'), 'warn');
+        } else {
+          dispatch(hideModal());
+          showToast(t('feedbackMessages.channel.added'), 'success');
+        }
+      });
+  };
   const formik = useFormik({
     initialValues: { channel: '' },
     validationSchema: channelsSchema,
-    onSubmit: (values, actions) => {
-      const isAlreadyExist = channels.find((item) => item.name === values.channel);
-      if (isAlreadyExist) {
-        actions.setErrors({ channelExist: 'channel already exsist' });
-        inputRef.current.focus();
-        return;
-      }
-      if (!app.socket.connected) {
-        showToast(t('feedbackMessages.errors.network'), 'error');
-        inputRef.current.focus();
-        return;
-      }
-      Array.from(formRef.current.elements).forEach((element) => {
-        element.setAttribute('disabled', true);
-      });
-      app.socket.timeout(5000)
-        .emit('newChannel', { name: values.channel }, (err) => {
-          if (err) {
-            Array.from(formRef.current.elements).forEach((element) => {
-              element.removeAttribute('disabled');
-            });
-            showToast(t('feedbackMessages.errors.response'), 'warn');
-          } else {
-            dispatch(hideModal());
-            showToast(t('feedbackMessages.channel.added'), 'success');
-          }
-        });
-    },
+    onSubmit: handleSubmit,
   });
   return (
     <Modal

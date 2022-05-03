@@ -3,21 +3,21 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { Form, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import useAuth from '../hooks/index.jsx';
 import TextField from './TextField.jsx';
-import useAppContext from '../hooks/index.jsx';
 import FormWrapper from './FormWrapper.jsx';
 import handleSubmit from '../handleSubmit.js';
 
 function Login() {
-  const app = useAppContext();
+  const auth = useAuth();
   const navigate = useNavigate();
   const { t } = useTranslation();
-  if (app.loggedIn) {
+  if (auth.loggedIn) {
     navigate('/', { replace: true });
   }
   const formik = useFormik({
     initialValues: { login: '', password: '' },
-    onSubmit: handleSubmit(app, navigate, 'loginPath'),
+    onSubmit: handleSubmit(auth, navigate, 'loginPath'),
   });
   return (
     <FormWrapper title={t('loginPage.title')}>

@@ -13,7 +13,7 @@ export default {
     },
     loginPage: {
       title: 'Войти',
-      login: 'Логин',
+      login: 'Ваш ник',
       password: 'Пароль',
       loginButton: 'Войти',
       footer: {
@@ -23,7 +23,7 @@ export default {
     },
     signupPage: {
       title: 'Регистрация',
-      login: 'Логин',
+      login: 'Имя пользователя',
       password: 'Пароль',
       confirmPassword: 'Подтвердите пароль',
       signupButton: 'Зарегистрироваться',
@@ -43,7 +43,7 @@ export default {
       add: {
         title: 'Добавить канал',
         input: 'Канал',
-        submitButton: 'Добавить',
+        submitButton: 'Отправить',
         closeButton: 'Отменить',
       },
       delete: {
@@ -54,7 +54,7 @@ export default {
       rename: {
         title: 'Переименовать канал',
         input: 'Канал',
-        submitButton: 'Переименовать',
+        submitButton: 'Отправить',
         closeButton: 'Отменить',
       },
     },
@@ -66,15 +66,15 @@ export default {
         renamed: 'Канал переименован!',
       },
       errors: {
-        network: 'Ошибка сети. Попробуйте позже.',
-        userExist: 'Пользователь уже существует',
-        userNotFound: 'Пользователь не найден',
+        network: 'Ошибка соединения',
+        userExist: 'Такой пользователь уже существует',
+        userNotFound: 'Неверные имя пользователя или пароль',
         required: 'Обязательное поле',
         unknown: 'Неизвестная ошибка',
         response: 'Нет ответа от сервера',
         login: {
-          min: 'Не менее 3 символов',
-          max: 'Не более 20 символов',
+          min: 'От 3 до 20 символов',
+          max: 'От 3 до 20 символов',
         },
         password: {
           min: 'Не менее 6 символов',
@@ -86,6 +86,7 @@ export default {
           min: 'Не менее 3 символов',
           max: 'Не более 20 символов',
           empty: 'Не должно быть пустым',
+          exist: 'Должно быть уникальным',
         },
       },
     },
