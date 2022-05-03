@@ -11,13 +11,13 @@ import handleSubmit from '../handleSubmit.js';
 function Login() {
   const auth = useAuth();
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   if (auth.loggedIn) {
     navigate('/', { replace: true });
   }
   const formik = useFormik({
     initialValues: { login: '', password: '' },
-    onSubmit: handleSubmit(auth, navigate, 'loginPath'),
+    onSubmit: handleSubmit(auth, navigate, i18n, 'loginPath'),
   });
   return (
     <FormWrapper title={t('loginPage.title')}>
@@ -31,6 +31,7 @@ function Login() {
           value={formik.values.login}
           touched={formik.touched.login}
           error={formik.errors.userNotFound}
+          autocomplete="username"
           required
         />
         <TextField
@@ -42,6 +43,7 @@ function Login() {
           value={formik.values.password}
           touched={formik.touched.password}
           error={formik.errors.userNotFound}
+          autocomplete="current-password"
           required
         />
         <Button type="submit" variant="primary" className="w-100 mb-3 p-3">

@@ -30,6 +30,7 @@ function Messages() {
     const username = localStorageData.getUsername();
     if (!socket.connected) {
       showToast(t('feedbackMessages.errors.network'), 'error');
+      return;
     }
     inputEl.current.setAttribute('disabled', true);
     buttonEl.current.setAttribute('disabled', true);

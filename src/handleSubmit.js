@@ -1,9 +1,8 @@
 import axios from 'axios';
-import i18nInstance from './i18n.js';
 import routes from './routes.js';
 import showToast from './showToast.js';
 
-export default (auth, navigate, path) => async (values, actions) => {
+export default (auth, navigate, i18nInstance, path) => async (values, actions) => {
   try {
     const { data } = await axios.post(routes[path](), {
       username: values.login,

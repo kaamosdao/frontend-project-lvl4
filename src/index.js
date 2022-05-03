@@ -3,6 +3,9 @@ import { Provider, useSelector } from 'react-redux';
 import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 import { ToastContainer } from 'react-toastify';
 import filter from 'leo-profanity';
+import i18next from 'i18next';
+import { initReactI18next } from 'react-i18next';
+import resources from './locales/index.js';
 import App from './App.jsx';
 import store from './slices/index.js';
 import { addMessage } from './slices/messageSlice.js';
@@ -55,7 +58,21 @@ function FilterProvider({ profanityFilter, children }) {
   );
 }
 
-export default function init(socket) {
+export default async function init(socket) {
+  const i18nInstance = i18next.createInstance();
+
+  await i18nInstance
+  // .use(LanguageDetector)
+    .use(initReactI18next)
+    .init({
+      debug: true,
+      lng: 'ru',
+      interpolation: {
+        escapeValue: false,
+      },
+      resources,
+    });
+
   filter.add(filter.getDictionary('ru'));
 
   socket.on('newMessage', (data) => {
