@@ -13,7 +13,7 @@ function TextField({
   });
 
   const isServerError = error === 'feedbackMessages.errors.userExist' || error === 'feedbackMessages.errors.userNotFound';
-  const isPassword = props.id === 'password';
+  const isPassword = id === 'password';
 
   return (
     <FloatingLabel controlId={id} label={label} className="form-floating mb-4">
