@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import cn from 'classnames';
 
 function TextField({
-  label, touched, error, ...props
+  label, touched, error, id, ...props
 }) {
   const { t } = useTranslation();
 
@@ -16,7 +16,7 @@ function TextField({
   const isPassword = props.id === 'password';
 
   return (
-    <FloatingLabel controlId={props.id} label={label} className="form-floating mb-4">
+    <FloatingLabel controlId={id} label={label} className="form-floating mb-4">
       <Form.Control className={inputClass} {...props} placeholder={label} />
       <div className="invalid-tooltip">
         {!isServerError && touched && t(error)}

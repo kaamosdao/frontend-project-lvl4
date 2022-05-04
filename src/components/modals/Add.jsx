@@ -82,7 +82,6 @@ function Add() {
       aria-labelledby="contained-modal-title-vcenter"
       centered
       onHide={handleClose}
-      onSubmit={formik.handleSubmit}
     >
       <Modal.Header className="border-0" closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
@@ -90,7 +89,7 @@ function Add() {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form ref={formRef} className="w-100 m-auto mb-4 p-0">
+        <Form ref={formRef} onSubmit={formik.handleSubmit} className="w-100 m-auto mb-4 p-0">
           <TextField
             label={t('modals.add.input')}
             id="channel"

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import cn from 'classnames';
 
 export default React.forwardRef(({
-  label, touched, error, ...props
+  label, touched, error, id, ...props
 }, ref) => {
   const { t } = useTranslation();
   const inputClass = cn('form-control', {
@@ -12,7 +12,7 @@ export default React.forwardRef(({
   });
 
   return (
-    <FloatingLabel controlId={props.id} label={label} className="form-floating mb-4">
+    <FloatingLabel controlId={id} label={label} className="form-floating mb-4">
       <Form.Control autoComplete="off" ref={ref} className={inputClass} {...props} placeholder={label} />
       <div className="invalid-tooltip">
         {touched && t(error)}
