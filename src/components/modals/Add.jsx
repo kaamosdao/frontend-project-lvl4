@@ -24,6 +24,7 @@ function Add() {
   const handleClose = () => {
     dispatch(hideModal());
   };
+  console.log('AddModal');
   const handleSubmit = (values, actions) => {
     const isAlreadyExist = channels.find((item) => item.name === values.channel);
     if (isAlreadyExist) {
@@ -39,7 +40,7 @@ function Add() {
     Array.from(formRef.current.elements).forEach((element) => {
       element.setAttribute('disabled', true);
     });
-    console.log('AddSubmit');
+    console.log('AddSubmit!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
     // socket.timeout(5000)
     //   .emit('newChannel', { name: values.channel }, (err) => {
     //     if (err) {
