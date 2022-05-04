@@ -43,18 +43,33 @@ function Rename() {
       Array.from(formRef.current.elements).forEach((element) => {
         element.setAttribute('disabled', true);
       });
-      socket.timeout(5000)
-        .emit('renameChannel', { id, name: values.channel }, (err) => {
-          if (err) {
-            Array.from(formRef.current.elements).forEach((element) => {
-              element.removeAttribute('disabled');
-            });
-            showToast(t('feedbackMessages.errors.response'), 'warn');
-          } else {
-            dispatch(hideModal());
-            showToast(t('feedbackMessages.channel.renamed'), 'success');
-          }
+      // socket.timeout(5000)
+      //   .emit('renameChannel', { id, name: values.channel }, (err) => {
+      //     if (err) {
+      //       Array.from(formRef.current.elements).forEach((element) => {
+      //         element.removeAttribute('disabled');
+      //       });
+      //       showToast(t('feedbackMessages.errors.response'), 'warn');
+      //     } else {
+      //       dispatch(hideModal());
+      //       showToast(t('feedbackMessages.channel.renamed'), 'success');
+      //     }
+      //   });
+      const timeoutID = setTimeout(() => {
+        Array.from(formRef.current.elements).forEach((element) => {
+          element.removeAttribute('disabled');
         });
+      }, 5000);
+      socket.emit('renameChannel', { id, name: values.channel }, (response) => {
+        if (response.status === 'ok') {
+          Array.from(formRef.current.elements).forEach((element) => {
+            element.removeAttribute('disabled');
+          });
+          clearTimeout(timeoutID);
+          dispatch(hideModal());
+          showToast(t('feedbackMessages.channel.renamed'), 'success');
+        }
+      });
     },
   });
   return (

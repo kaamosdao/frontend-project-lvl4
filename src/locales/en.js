@@ -31,6 +31,7 @@ export default {
     homePage: {
       channels: {
         title: 'Channels',
+        dropdownLabel: 'Channel operations',
         dropdownRemove: 'Remove',
         dropdownRename: 'Rename',
       },
@@ -43,7 +44,7 @@ export default {
     modals: {
       add: {
         title: 'Add channel',
-        input: 'Channel',
+        input: 'Channel name',
         submitButton: 'Create',
         closeButton: 'Cancel',
       },
@@ -54,7 +55,7 @@ export default {
       },
       rename: {
         title: 'Rename channel',
-        input: 'Channel',
+        input: 'Channel name',
         submitButton: 'Rename',
         closeButton: 'Cancel',
       },

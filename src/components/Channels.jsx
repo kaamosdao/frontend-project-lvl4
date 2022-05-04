@@ -40,7 +40,9 @@ function Channels() {
                     {`# ${item.name}`}
                   </Button>
 
-                  <Dropdown.Toggle split variant={variantValue} id="dropdown-split-basic" />
+                  <Dropdown.Toggle split variant={variantValue} id="dropdown-split-basic">
+                    <span className="visually-hidden">{t('homePage.channels.dropdownLabel')}</span>
+                  </Dropdown.Toggle>
 
                   <Dropdown.Menu>
                     <Dropdown.Item href="#" role="button" onClick={() => showModal('deleting', item)}>{t('homePage.channels.dropdownRemove')}</Dropdown.Item>

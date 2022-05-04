@@ -31,6 +31,7 @@ export default {
     homePage: {
       channels: {
         title: 'Каналы',
+        dropdownLabel: 'Управление каналом',
         dropdownRemove: 'Удалить',
         dropdownRename: 'Переименовать',
       },
@@ -43,7 +44,7 @@ export default {
     modals: {
       add: {
         title: 'Добавить канал',
-        input: 'Канал',
+        input: 'Имя канала',
         submitButton: 'Отправить',
         closeButton: 'Отменить',
       },
@@ -54,7 +55,7 @@ export default {
       },
       rename: {
         title: 'Переименовать канал',
-        input: 'Канал',
+        input: 'Имя канала',
         submitButton: 'Отправить',
         closeButton: 'Отменить',
       },
