@@ -83,13 +83,13 @@ function Add() {
       centered
       onHide={handleClose}
     >
-      <Form ref={formRef} onSubmit={formik.handleSubmit} className="w-100 m-auto mb-4 p-0">
-        <Modal.Header className="border-0" closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
-            {t('modals.add.title')}
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
+      <Modal.Header className="border-0" closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">
+          {t('modals.add.title')}
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Form ref={formRef} onSubmit={formik.handleSubmit} className="w-100 m-auto mb-4 p-0">
           <TextField
             label={t('modals.add.input')}
             id="channel"
@@ -101,12 +101,10 @@ function Add() {
             error={formik.errors.channel || formik.errors.channelExist}
             ref={inputRef}
           />
-        </Modal.Body>
-        <Modal.Footer>
           <Button variant="primary" type="submit">{t('modals.add.submitButton')}</Button>
-          <Button variant="secondary" onClick={handleClose}>{t('modals.add.closeButton')}</Button>
-        </Modal.Footer>
-      </Form>
+          <Button variant="secondary" onClick={handleClose} className="ms-2">{t('modals.add.closeButton')}</Button>
+        </Form>
+      </Modal.Body>
     </Modal>
   );
 }
