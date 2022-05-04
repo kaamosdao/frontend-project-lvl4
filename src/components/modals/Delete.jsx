@@ -51,8 +51,8 @@ function Delete() {
           element.removeAttribute('disabled');
         });
         clearTimeout(timeoutID);
-        dispatch(hideModal());
         showToast(t('feedbackMessages.channel.removed'), 'success');
+        dispatch(hideModal());
       }
     });
   };

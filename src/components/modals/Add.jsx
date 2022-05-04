@@ -62,8 +62,8 @@ function Add() {
           element.removeAttribute('disabled');
         });
         clearTimeout(timeoutID);
-        dispatch(hideModal());
         showToast(t('feedbackMessages.channel.added'), 'success');
+        dispatch(hideModal());
       }
     });
   };

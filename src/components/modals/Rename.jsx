@@ -66,8 +66,8 @@ function Rename() {
             element.removeAttribute('disabled');
           });
           clearTimeout(timeoutID);
-          dispatch(hideModal());
           showToast(t('feedbackMessages.channel.renamed'), 'success');
+          dispatch(hideModal());
         }
       });
     },

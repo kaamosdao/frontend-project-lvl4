@@ -14,6 +14,7 @@ const showToast = (notification, type = 'default') => {
   if (type === 'default') {
     return toast(notification, optionst);
   }
+  console.log(toast[type]);
   return toast[type](notification, optionst);
 };
 
