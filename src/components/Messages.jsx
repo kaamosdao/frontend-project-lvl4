@@ -10,6 +10,7 @@ import showToast from '../showToast.js';
 
 function Messages() {
   const { socket } = useSocket();
+  console.log('messages', socket);
   const { filter } = useFilter();
   const { t } = useTranslation();
   const channels = useSelector((state) => state.channels.items);

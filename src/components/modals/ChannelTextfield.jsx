@@ -12,7 +12,7 @@ export default React.forwardRef(({
   });
 
   return (
-    <FloatingLabel label={label} className="form-floating mb-4">
+    <FloatingLabel controlId={props.id} label={label} className="form-floating mb-4">
       <Form.Control autoComplete="off" ref={ref} className={inputClass} {...props} placeholder={label} />
       <div className="invalid-tooltip">
         {touched && t(error)}
