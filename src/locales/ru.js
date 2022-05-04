@@ -63,9 +63,9 @@ export default {
     feedbackMessages: {
       default: '',
       channel: {
-        added: 'Канал добавлен!',
-        removed: 'Канал удален!',
-        renamed: 'Канал переименован!',
+        added: 'Канал создан',
+        removed: 'Канал удалён',
+        renamed: 'Канал переименован',
       },
       errors: {
         network: 'Ошибка соединения',
