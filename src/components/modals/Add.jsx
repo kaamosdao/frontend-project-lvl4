@@ -26,6 +26,7 @@ function Add() {
   };
   console.log('AddModal');
   const handleSubmit = (values, actions) => {
+    console.log('AddSubmit!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
     const isAlreadyExist = channels.find((item) => item.name === values.channel);
     if (isAlreadyExist) {
       actions.setErrors({ channelExist: t('feedbackMessages.errors.channels.exist') });
@@ -40,7 +41,6 @@ function Add() {
     Array.from(formRef.current.elements).forEach((element) => {
       element.setAttribute('disabled', true);
     });
-    console.log('AddSubmit!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
     // socket.timeout(5000)
     //   .emit('newChannel', { name: values.channel }, (err) => {
     //     if (err) {
@@ -82,6 +82,7 @@ function Add() {
       aria-labelledby="contained-modal-title-vcenter"
       centered
       onHide={handleClose}
+      onSubmit={formik.handleSubmit}
     >
       <Modal.Header className="border-0" closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
@@ -89,7 +90,7 @@ function Add() {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form ref={formRef} onSubmit={formik.handleSubmit} className="w-100 m-auto mb-4 p-0">
+        <Form ref={formRef} className="w-100 m-auto mb-4 p-0">
           <TextField
             label={t('modals.add.input')}
             id="channel"
