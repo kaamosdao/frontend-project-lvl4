@@ -62,6 +62,7 @@ function Add() {
           element.removeAttribute('disabled');
         });
         clearTimeout(timeoutID);
+        console.log('showToast', showToast);
         showToast(t('feedbackMessages.channel.added'), 'success');
         dispatch(hideModal());
       }
