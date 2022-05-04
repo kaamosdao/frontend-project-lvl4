@@ -59,7 +59,7 @@ function FilterProvider({ profanityFilter, children }) {
 }
 
 export default async function init(socket) {
-  console.log('init', socket);
+  // console.log('init', socket);
   const i18nInstance = i18next.createInstance();
 
   await i18nInstance

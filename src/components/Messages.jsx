@@ -10,7 +10,7 @@ import showToast from '../showToast.js';
 
 function Messages() {
   const { socket } = useSocket();
-  console.log('messages', socket);
+  // console.log('messages', socket);
   const { filter } = useFilter();
   const { t } = useTranslation();
   const channels = useSelector((state) => state.channels.items);
@@ -35,14 +35,28 @@ function Messages() {
     }
     inputEl.current.setAttribute('disabled', true);
     buttonEl.current.setAttribute('disabled', true);
-    socket.timeout(5000)
-      .emit('newMessage', { username, message: inputValue, channelId: currentChannelId }, (err) => {
-        if (err) {
-          inputEl.current.removeAttribute('disabled');
-          buttonEl.current.removeAttribute('disabled');
-          inputEl.current.focus();
-          showToast(t('feedbackMessages.errors.response'), 'warn');
-        } else {
+    // socket.timeout(5000)
+    //   .emit('newMessage', { username, message: inputValue,
+    // channelId: currentChannelId }, (err) => {
+    //     if (err) {
+    //       inputEl.current.removeAttribute('disabled');
+    //       buttonEl.current.removeAttribute('disabled');
+    //       inputEl.current.focus();
+    //       showToast(t('feedbackMessages.errors.response'), 'warn');
+    //     } else {
+    //       inputEl.current.removeAttribute('disabled');
+    //       buttonEl.current.removeAttribute('disabled');
+    //       setInputValue('');
+    //     }
+    //   });
+    setTimeout(() => {
+      inputEl.current.removeAttribute('disabled');
+      buttonEl.current.removeAttribute('disabled');
+      inputEl.current.focus();
+    }, 5000);
+    socket
+      .emit('newMessage', { username, message: inputValue, channelId: currentChannelId }, (response) => {
+        if (response.status === 'ok') {
           inputEl.current.removeAttribute('disabled');
           buttonEl.current.removeAttribute('disabled');
           setInputValue('');
