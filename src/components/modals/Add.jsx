@@ -39,6 +39,7 @@ function Add() {
     Array.from(formRef.current.elements).forEach((element) => {
       element.setAttribute('disabled', true);
     });
+    console.log('AddSubmit');
     // socket.timeout(5000)
     //   .emit('newChannel', { name: values.channel }, (err) => {
     //     if (err) {
@@ -62,7 +63,7 @@ function Add() {
           element.removeAttribute('disabled');
         });
         clearTimeout(timeoutID);
-        console.log('showToast', showToast);
+        console.log('response.status', response.status);
         showToast(t('feedbackMessages.channel.added'), 'success');
         dispatch(hideModal());
       }

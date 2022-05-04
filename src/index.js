@@ -35,7 +35,6 @@ function AuthProvider({ children }) {
     <AuthContext.Provider value={providerData}>
       {children}
       {modalAction && getModal(modalAction)}
-      <ToastContainer />
     </AuthContext.Provider>
   );
 }
@@ -104,6 +103,7 @@ export default async function init(socket) {
             <FilterProvider profanityFilter={filter}>
               <AuthProvider>
                 <App />
+                <ToastContainer />
               </AuthProvider>
             </FilterProvider>
           </SocketProvider>
