@@ -36,6 +36,7 @@ export default {
       },
       messages: {
         inputPlaceholder: 'Text message...',
+        inputLabel: 'New message',
         sendButton: 'Send',
       },
     },

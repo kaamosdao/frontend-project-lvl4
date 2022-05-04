@@ -36,6 +36,7 @@ export default {
       },
       messages: {
         inputPlaceholder: 'Введите сообщение...',
+        inputLabel: 'Новое сообщение',
         sendButton: 'Отправить',
       },
     },

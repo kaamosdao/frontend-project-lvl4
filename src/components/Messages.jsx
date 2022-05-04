@@ -70,7 +70,9 @@ function Messages() {
       <div className="form-message mt-auto">
         <Form onSubmit={handleSubmit} noValidate>
           <InputGroup className="mb-3 border-0 p-0 ps-2">
+            <Form.Label className="visually-hidden" htmlFor="newMessage">{t('homePage.messages.inputLabel')}</Form.Label>
             <FormControl
+              id="newMessage"
               aria-label="New message"
               aria-describedby="basic-addon1"
               placeholder={t('homePage.messages.inputPlaceholder')}
