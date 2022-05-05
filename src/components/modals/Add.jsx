@@ -106,8 +106,8 @@ function Add() {
                 error={formik.errors.channel || formik.errors.channelExist}
                 ref={inputRef}
               />
-              <Button variant="primary" type="submit">{t('modals.add.submitButton')}</Button>
-              <Button variant="secondary" onClick={handleClose} className="ms-2">{t('modals.add.closeButton')}</Button>
+              <Button variant="primary" name={t('modals.add.submitButton')} type="submit">{t('modals.add.submitButton')}</Button>
+              <Button variant="secondary" name={t('modals.add.closeButton')} onClick={handleClose} className="ms-2">{t('modals.add.closeButton')}</Button>
             </Form>
           )}
         </Formik>
