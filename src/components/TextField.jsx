@@ -3,9 +3,10 @@ import { Form, FloatingLabel } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import cn from 'classnames';
 
-function TextField({
-  label, touched, error, id, ...props
-}) {
+function TextField(props) {
+  const {
+    label, id, type, onChange, onBlur, value, touched, error, autoComplete, required,
+  } = props;
   const { t } = useTranslation();
 
   const inputClass = cn('form-control', {
@@ -17,7 +18,13 @@ function TextField({
 
   return (
     <FloatingLabel controlId={id} label={label} className="form-floating mb-4">
-      <Form.Control className={inputClass} {...props} placeholder={label} />
+      <Form.Control
+        className={inputClass}
+        {...{
+          type, onChange, onBlur, value, autoComplete, required,
+        }}
+        placeholder={label}
+      />
       <div className="invalid-tooltip">
         {!isServerError && touched && t(error)}
         {isPassword && isServerError ? t(error) : ''}

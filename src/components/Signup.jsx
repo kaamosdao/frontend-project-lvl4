@@ -34,6 +34,7 @@ function Signup() {
           touched={formik.touched.login}
           error={formik.errors.login || formik.errors.userExist}
           autoComplete="username"
+          required
         />
         <TextField
           label={t('signupPage.password')}
@@ -45,6 +46,7 @@ function Signup() {
           touched={formik.touched.password}
           error={formik.errors.password || formik.errors.userExist}
           autoComplete="new-password"
+          required
         />
         <TextField
           label={t('signupPage.confirmPassword')}
@@ -56,6 +58,7 @@ function Signup() {
           touched={formik.touched.confirmPassword}
           error={formik.errors.confirmPassword || formik.errors.userExist}
           autoComplete="new-password"
+          required
         />
         <Button type="submit" variant="primary" className="w-100 mb-4 p-3">
           {t('signupPage.signupButton')}

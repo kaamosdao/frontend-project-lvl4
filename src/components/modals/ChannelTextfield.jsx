@@ -3,9 +3,10 @@ import { Form, FloatingLabel } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import cn from 'classnames';
 
-export default React.forwardRef(({
-  label, touched, error, id, ...props
-}, ref) => {
+export default React.forwardRef((props, ref) => {
+  const {
+    label, id, type, onChange, onBlur, value, touched, error,
+  } = props;
   const { t } = useTranslation();
   const inputClass = cn('form-control', {
     'is-invalid': touched && error,
@@ -13,7 +14,15 @@ export default React.forwardRef(({
 
   return (
     <FloatingLabel controlId={id} label={label} className="form-floating mb-4">
-      <Form.Control autoComplete="off" ref={ref} className={inputClass} {...props} placeholder={label} />
+      <Form.Control
+        autoComplete="off"
+        ref={ref}
+        className={inputClass}
+        {...{
+          type, onChange, onBlur, value,
+        }}
+        placeholder={label}
+      />
       <div className="invalid-tooltip">
         {touched && t(error)}
       </div>
