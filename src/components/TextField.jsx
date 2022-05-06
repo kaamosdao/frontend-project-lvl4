@@ -5,7 +5,7 @@ import cn from 'classnames';
 
 function TextField(props) {
   const {
-    label, id, type, onChange, onBlur, value, touched, error, autoComplete, required,
+    label, id, type, onChange, onBlur, value, touched, error, autoComplete, required, disabled,
   } = props;
   const { t } = useTranslation();
 
@@ -21,7 +21,7 @@ function TextField(props) {
       <Form.Control
         className={inputClass}
         {...{
-          type, onChange, onBlur, value, autoComplete, required,
+          type, onChange, onBlur, value, autoComplete, required, disabled,
         }}
         placeholder={label}
       />

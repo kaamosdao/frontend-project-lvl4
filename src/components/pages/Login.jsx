@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { Form, Button } from 'react-bootstrap';
@@ -8,7 +8,7 @@ import TextField from '../TextField.jsx';
 import FormWrapper from '../FormWrapper.jsx';
 import handleSubmit from '../../handleSubmit.js';
 
-const mapFields = (fields, formik, translate) => fields.map((field) => {
+const mapFields = (fields, formik, translate, isSubmitted) => fields.map((field) => {
   const autoComplete = field === 'login' ? 'username' : 'current-password';
   const type = field === 'login' ? 'text' : 'password';
   return (
@@ -23,12 +23,14 @@ const mapFields = (fields, formik, translate) => fields.map((field) => {
       error={formik.errors[field] || formik.errors.userNotFound}
       autoComplete={autoComplete}
       required
+      disabled={isSubmitted}
       key={field}
     />
   );
 });
 
 function Login() {
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const auth = useAuth();
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
@@ -37,13 +39,13 @@ function Login() {
   }
   const formik = useFormik({
     initialValues: { login: '', password: '' },
-    onSubmit: handleSubmit(auth, navigate, i18n, 'loginPath'),
+    onSubmit: handleSubmit(auth, navigate, i18n, setIsSubmitted, 'loginPath'),
   });
   return (
     <FormWrapper title={t('loginPage.title')}>
       <Form onSubmit={formik.handleSubmit} className="w-50 m-auto mb-4 p-0">
-        {mapFields(['login', 'password'], formik, t)}
-        <Button type="submit" variant="primary" className="w-100 mb-3 p-3">
+        {mapFields(['login', 'password'], formik, t, isSubmitted)}
+        <Button disabled={isSubmitted} type="submit" variant="primary" className="w-100 mb-3 p-3">
           {t('loginPage.loginButton')}
         </Button>
       </Form>
