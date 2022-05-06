@@ -6,9 +6,7 @@ import DropdownButton from './DropdownButton.jsx';
 
 function ChannelsItem({ showModal, item }) {
   const channels = useSelector((state) => state.channels.items);
-  const currentChannelId = useSelector(
-    (state) => state.channels.currentChannelId
-  );
+  const currentChannelId = useSelector((state) => state.channels.currentChannelId);
   const dispatch = useDispatch();
   const toggleCurrentChannel = (event) => {
     const channelName = event.target.textContent.slice(2);
