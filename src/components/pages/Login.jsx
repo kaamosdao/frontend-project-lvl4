@@ -20,7 +20,7 @@ const mapFields = (fields, formik, translate) => fields.map((field) => {
       onBlur={formik.handleBlur}
       value={formik.values[field]}
       touched={formik.touched[field]}
-      error={formik.errors[field] || formik.errors.userExist}
+      error={formik.errors[field] || formik.errors.userNotFound}
       autoComplete={autoComplete}
       required
       key={field}
