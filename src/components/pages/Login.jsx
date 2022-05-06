@@ -13,7 +13,7 @@ const mapFields = (fields, formik, translate) => fields.map((field) => {
   const type = field === 'login' ? 'text' : 'password';
   return (
     <TextField
-      label={translate(`signupPage.${field}`)}
+      label={translate(`loginPage.${field}`)}
       id={field}
       type={type}
       onChange={formik.handleChange}
