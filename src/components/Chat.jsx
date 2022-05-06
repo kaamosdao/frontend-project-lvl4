@@ -11,32 +11,32 @@ import routes from '../routes.js';
 import Channels from './channels/Channels.jsx';
 import Messages from './messages/Messages.jsx';
 
+const fetchData = async (token, dispatch, logOut, navigate) => {
+  const options = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  try {
+    const { data } = await axios.get(routes.dataPath(), options);
+    dispatch(setChannels(data.channels));
+    dispatch(setMessages(data.messages));
+    dispatch(setCurrentChannel(data.currentChannelId));
+  } catch (error) {
+    logOut();
+    navigate('/login');
+    throw error;
+  }
+};
+
 function Chat() {
   const { logOut } = useAuth();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const fetchData = async (token) => {
-      const options = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-      try {
-        const { data } = await axios.get(routes.dataPath(), options);
-        dispatch(setChannels(data.channels));
-        dispatch(setMessages(data.messages));
-        dispatch(setCurrentChannel(data.currentChannelId));
-      } catch (error) {
-        logOut();
-        navigate('/login');
-        throw error;
-      }
-    };
-
     const token = localStorageData.getToken();
-    fetchData(token);
+    fetchData(token, dispatch, logOut, navigate);
   }, [dispatch, logOut, navigate]);
 
   return (
