@@ -6,7 +6,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import { hideModal } from '../../slices/modalSlice.js';
-import TextField from './ChannelTextfield.jsx';
+import ChannelTextfield from './ChannelTextfield.jsx';
 import { channelsSchema } from '../../validationSchema.js';
 import { useSocket } from '../../hooks/index.jsx';
 import showToast from '../../showToast.js';
@@ -75,7 +75,7 @@ function Add() {
       </Modal.Header>
       <Modal.Body>
         <Form ref={formRef} onSubmit={formik.handleSubmit} className="w-100 m-auto mb-4 p-0">
-          <TextField
+          <ChannelTextfield
             label={t('modals.add.input')}
             id="channel"
             type="text"

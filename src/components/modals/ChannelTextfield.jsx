@@ -3,7 +3,7 @@ import { Form, FloatingLabel } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import cn from 'classnames';
 
-export default React.forwardRef((props, ref) => {
+const ChannelTextfield = React.forwardRef((props, ref) => {
   const {
     label, id, type, onChange, onBlur, value, touched, error,
   } = props;
@@ -29,3 +29,7 @@ export default React.forwardRef((props, ref) => {
     </FloatingLabel>
   );
 });
+
+ChannelTextfield.displayName = 'ChannelTextfield';
+
+export default ChannelTextfield;
