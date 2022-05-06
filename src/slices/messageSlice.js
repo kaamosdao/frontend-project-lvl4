@@ -17,12 +17,12 @@ const messageSlice = createSlice({
       const appState = state;
       appState.items.push(payload);
     },
-    extraReducers: (builder) => {
-      builder.addCase(removeChannel, (state, { payload }) => {
-        const appState = state;
-        appState.items = state.items.filter((message) => message.channelId !== payload.id);
-      });
-    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(removeChannel, (state, { payload }) => {
+      const appState = state;
+      appState.items = state.items.filter((message) => message.channelId !== payload.id);
+    });
   },
 });
 

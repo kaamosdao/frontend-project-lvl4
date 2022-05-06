@@ -3,10 +3,30 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { Form, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import useAuth from '../hooks/index.jsx';
-import TextField from './TextField.jsx';
-import FormWrapper from './FormWrapper.jsx';
-import handleSubmit from '../handleSubmit.js';
+import useAuth from '../../hooks/index.jsx';
+import TextField from '../TextField.jsx';
+import FormWrapper from '../FormWrapper.jsx';
+import handleSubmit from '../../handleSubmit.js';
+
+const mapFields = (fields, formik, translate) => fields.map((field) => {
+  const autoComplete = field === 'login' ? 'username' : 'current-password';
+  const type = field === 'login' ? 'text' : 'password';
+  return (
+    <TextField
+      label={translate(`signupPage.${field}`)}
+      id={field}
+      type={type}
+      onChange={formik.handleChange}
+      onBlur={formik.handleBlur}
+      value={formik.values[field]}
+      touched={formik.touched[field]}
+      error={formik.errors[field] || formik.errors.userExist}
+      autoComplete={autoComplete}
+      required
+      key={field}
+    />
+  );
+});
 
 function Login() {
   const auth = useAuth();
@@ -22,30 +42,7 @@ function Login() {
   return (
     <FormWrapper title={t('loginPage.title')}>
       <Form onSubmit={formik.handleSubmit} className="w-50 m-auto mb-4 p-0">
-        <TextField
-          label={t('loginPage.login')}
-          id="login"
-          type="text"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.login}
-          touched={formik.touched.login}
-          error={formik.errors.userNotFound}
-          autoComplete="username"
-          required
-        />
-        <TextField
-          label={t('loginPage.password')}
-          id="password"
-          type="password"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.password}
-          touched={formik.touched.password}
-          error={formik.errors.userNotFound}
-          autoComplete="current-password"
-          required
-        />
+        {mapFields(['login', 'password'], formik, t)}
         <Button type="submit" variant="primary" className="w-100 mb-3 p-3">
           {t('loginPage.loginButton')}
         </Button>

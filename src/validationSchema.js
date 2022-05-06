@@ -3,7 +3,7 @@ import * as yup from 'yup';
 export const channelsSchema = yup.object().shape({
   channel: yup.string()
     .min(3, 'feedbackMessages.errors.channels.min')
-    .max(10, 'feedbackMessages.errors.channels.max')
+    .max(20, 'feedbackMessages.errors.channels.max')
     .required('feedbackMessages.errors.channels.empty'),
 });
 

@@ -28,18 +28,6 @@ function Delete() {
     Array.from(formRef.current.elements).forEach((element) => {
       element.setAttribute('disabled', true);
     });
-    // socket.timeout(5000)
-    //   .emit('removeChannel', { id }, (err) => {
-    //     if (err) {
-    //       Array.from(formRef.current.elements).forEach((element) => {
-    //         element.removeAttribute('disabled');
-    //       });
-    //       showToast(t('feedbackMessages.errors.response'), 'warn');
-    //     } else {
-    //       dispatch(hideModal());
-    //       showToast(t('feedbackMessages.channel.removed'), 'success');
-    //     }
-    //   });
     const timeoutID = setTimeout(() => {
       Array.from(formRef.current.elements).forEach((element) => {
         element.removeAttribute('disabled');

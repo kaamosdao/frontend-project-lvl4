@@ -1,11 +1,11 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Home from './components/Home.jsx';
-import Login from './components/Login.jsx';
-import Signup from './components/Signup.jsx';
-import Notfound from './components/Notfound.jsx';
+import Home from './components/pages/Home.jsx';
+import Login from './components/pages/Login.jsx';
+import Signup from './components/pages/Signup.jsx';
+import Notfound from './components/pages/Notfound.jsx';
 import Layout from './components/Layout.jsx';
-import About from './components/About.jsx';
+import About from './components/pages/About.jsx';
 
 function App() {
   return (
