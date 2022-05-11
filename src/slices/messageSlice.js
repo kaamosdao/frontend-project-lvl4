@@ -29,7 +29,3 @@ const messageSlice = createSlice({
 export const { setMessages, addMessage } = messageSlice.actions;
 
 export default messageSlice.reducer;
-
-// {"channels":[{"id":1,"name":"general","removable":false},
-// {"id":2,"name":"random","removable":false}],
-// "messages":[],"currentChannelId":1}

@@ -1,20 +1,13 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import {
   Button, Dropdown, ButtonGroup,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { setCurrentChannel } from '../../slices/channelSlice.js';
 
-function DropdownButton({ variantValue, item, showModal }) {
+function DropdownButton({
+  variantValue, item, showModal, toggleCurrentChannel,
+}) {
   const { t } = useTranslation();
-  const channels = useSelector((state) => state.channels.items);
-  const dispatch = useDispatch();
-  const toggleCurrentChannel = (event) => {
-    const channelName = event.target.textContent.slice(2);
-    const { id } = channels.find((channel) => channel.name === channelName);
-    dispatch(setCurrentChannel(id));
-  };
 
   return (
     <Dropdown as={ButtonGroup} className="w-100">

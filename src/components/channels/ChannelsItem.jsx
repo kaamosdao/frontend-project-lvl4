@@ -21,6 +21,7 @@ function ChannelsItem({ showModal, item }) {
           variantValue={variantValue}
           item={item}
           showModal={showModal}
+          toggleCurrentChannel={toggleCurrentChannel}
         />
       </Nav.Item>
     );

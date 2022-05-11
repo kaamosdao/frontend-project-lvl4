@@ -13,15 +13,16 @@ function Login() {
   const auth = useAuth();
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
-  if (auth.loggedIn) {
-    navigate('/', { replace: true });
-  }
+
+  if (auth.loggedIn) navigate('/', { replace: true });
+
   const formik = useFormik({
     initialValues: { login: '', password: '' },
     onSubmit: createAuthHandleSubmit({
       auth, navigate, i18n, setIsSubmitted,
     }, 'loginPath'),
   });
+
   return (
     <FormWrapper title={t('loginPage.title')}>
       <Form onSubmit={formik.handleSubmit} className="w-50 m-auto mb-4 p-0">
