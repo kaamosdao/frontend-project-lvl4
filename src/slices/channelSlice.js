@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import removeItemFromState from './removeItemFromState.js';
 
 const initialState = {
   currentChannelId: 1,
@@ -27,7 +28,7 @@ const channelSlice = createSlice({
     },
     renameChannel: (state, { payload }) => {
       const appState = state;
-      const index = appState.items.findIndex((element) => element.id === payload.id);
+      const index = removeItemFromState(appState, 'id', payload);
       appState.items[index] = payload;
     },
   },
