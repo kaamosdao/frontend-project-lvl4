@@ -4,30 +4,9 @@ import { useFormik } from 'formik';
 import { Form, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import useAuth from '../../hooks/index.jsx';
-import TextField from '../TextField.jsx';
 import FormWrapper from '../FormWrapper.jsx';
 import handleSubmit from '../../handleSubmit.js';
-
-const mapFields = (fields, formik, translate, isSubmitted) => fields.map((field) => {
-  const autoComplete = field === 'login' ? 'username' : 'current-password';
-  const type = field === 'login' ? 'text' : 'password';
-  return (
-    <TextField
-      label={translate(`loginPage.${field}`)}
-      id={field}
-      type={type}
-      onChange={formik.handleChange}
-      onBlur={formik.handleBlur}
-      value={formik.values[field]}
-      touched={formik.touched[field]}
-      error={formik.errors[field] || formik.errors.userNotFound}
-      autoComplete={autoComplete}
-      required
-      disabled={isSubmitted}
-      key={field}
-    />
-  );
-});
+import getTextfields from '../../getTextfields.jsx';
 
 function Login() {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -44,7 +23,7 @@ function Login() {
   return (
     <FormWrapper title={t('loginPage.title')}>
       <Form onSubmit={formik.handleSubmit} className="w-50 m-auto mb-4 p-0">
-        {mapFields(['login', 'password'], formik, t, isSubmitted)}
+        {getTextfields('loginPage', ['login', 'password'], formik, t, isSubmitted)}
         <Button disabled={isSubmitted} type="submit" variant="primary" className="w-100 mb-3 p-3">
           {t('loginPage.loginButton')}
         </Button>

@@ -57,7 +57,7 @@ function FilterProvider({ profanityFilter, children }) {
   );
 }
 
-export default async function init(socket) {
+export default async (socket) => {
   const i18nInstance = i18next.createInstance();
 
   await i18nInstance
@@ -111,4 +111,4 @@ export default async function init(socket) {
       </RollbarProvider>
     </Provider>
   );
-}
+};
