@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Form } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { useSocket } from '../../hooks/index.jsx';
+import { useApp } from '../../hooks/index.jsx';
 import localStorageData from '../../localStorageData.js';
 import showToast from '../../showToast.js';
 import Input from './Input.jsx';
@@ -55,7 +55,7 @@ const createHandleSubmit = (elements) => (event) => {
 };
 
 function MessageForm() {
-  const { socket } = useSocket();
+  const { socket } = useApp();
   const { t } = useTranslation();
   const formEl = useRef(null);
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);

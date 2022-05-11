@@ -1,9 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useFilter } from '../../hooks/index.jsx';
+import { useApp } from '../../hooks/index.jsx';
 
 function MessagesList() {
-  const { filter } = useFilter();
+  const { filter } = useApp();
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
   const messages = useSelector((state) => state.messages.items);
 

@@ -2,12 +2,12 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Form } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { useSocket } from '../../hooks/index.jsx';
+import { useApp } from '../../hooks/index.jsx';
 import createModalHandleSubmit from '../../handleSubmit.js';
 
 const DeleteForm = React.forwardRef((props, ref) => {
   const dispatch = useDispatch();
-  const { socket } = useSocket();
+  const { socket } = useApp();
   const { t } = useTranslation();
   const { id } = useSelector((state) => state.modal.item);
   const handleSubmit = createModalHandleSubmit('removeChannel', {

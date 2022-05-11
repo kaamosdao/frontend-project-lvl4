@@ -1,6 +1,7 @@
 import axios from 'axios';
 import routes from './routes.js';
 import showToast from './showToast.js';
+import { setCurrentChannel } from './slices/channelSlice.js';
 import { hideModal } from './slices/modalSlice.js';
 
 const handleNetworkError = (message, i18nInstance) => {
@@ -72,6 +73,9 @@ const emitEvent = (event, formRef, socket, timeoutID, dispatch, translate, data)
       toggleFormElementsState(formRef, 'enable');
       showToast(translate(eventMessage[event]), 'success');
       dispatch(hideModal());
+      if (event === 'newChannel') {
+        dispatch(setCurrentChannel(response.data.id));
+      }
     }
   });
 };

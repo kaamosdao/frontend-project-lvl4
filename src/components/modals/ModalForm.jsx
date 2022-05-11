@@ -4,7 +4,7 @@ import { Button, Form } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import { channelsSchema } from '../../validationSchema.js';
-import { useSocket } from '../../hooks/index.jsx';
+import { useApp } from '../../hooks/index.jsx';
 import { getChannelField } from '../../getTextfields.jsx';
 import createModalHandleSubmit from '../../handleSubmit.js';
 
@@ -12,7 +12,7 @@ function FormComponent({
   handleClose, initialValue, id, event,
 }, ref) {
   const dispatch = useDispatch();
-  const { socket } = useSocket();
+  const { socket } = useApp();
   const { t } = useTranslation();
   const channels = useSelector((state) => state.channels.items);
 

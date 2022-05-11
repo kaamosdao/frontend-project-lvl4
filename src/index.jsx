@@ -13,8 +13,7 @@ import {
   addChannel, setCurrentChannel, removeChannel, renameChannel,
 } from './slices/channelSlice.js';
 import AuthContext from './hooks/AuthContext.jsx';
-import SocketContext from './hooks/SocketContext.jsx';
-import FilterContext from './hooks/FilterContext.jsx';
+import AppContext from './hooks/AppContext.jsx';
 import localStorageData from './localStorageData.js';
 import getModal from './getModal.jsx';
 
@@ -39,21 +38,15 @@ function AuthProvider({ children }) {
   );
 }
 
-function SocketProvider({ socket, children }) {
-  const providerData = useMemo(() => ({ socket }), [socket]);
+function AppProvider({ profanityFilter, socket, children }) {
+  const providerData = useMemo(() => ({
+    socket,
+    filter: profanityFilter,
+  }), [profanityFilter, socket]);
   return (
-    <SocketContext.Provider value={providerData}>
+    <AppContext.Provider value={providerData}>
       {children}
-    </SocketContext.Provider>
-  );
-}
-
-function FilterProvider({ profanityFilter, children }) {
-  const providerData = useMemo(() => ({ filter: profanityFilter }), [profanityFilter]);
-  return (
-    <FilterContext.Provider value={providerData}>
-      {children}
-    </FilterContext.Provider>
+    </AppContext.Provider>
   );
 }
 
@@ -79,7 +72,6 @@ export default async (socket) => {
   });
   socket.on('newChannel', (data) => {
     store.dispatch(addChannel(data));
-    store.dispatch(setCurrentChannel(data.id));
   });
   socket.on('removeChannel', (data) => {
     store.dispatch(removeChannel(data));
@@ -99,14 +91,12 @@ export default async (socket) => {
     <Provider store={store}>
       <RollbarProvider config={rollbarConfig}>
         <ErrorBoundary>
-          <SocketProvider socket={socket}>
-            <FilterProvider profanityFilter={filter}>
-              <AuthProvider>
-                <App />
-                <ToastContainer />
-              </AuthProvider>
-            </FilterProvider>
-          </SocketProvider>
+          <AppProvider socket={socket} profanityFilter={filter}>
+            <AuthProvider>
+              <App />
+              <ToastContainer />
+            </AuthProvider>
+          </AppProvider>
         </ErrorBoundary>
       </RollbarProvider>
     </Provider>
