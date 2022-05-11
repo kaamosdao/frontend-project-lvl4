@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { hideModal } from '../../slices/modalSlice.js';
 import ModalContainer from './ModalContainer.jsx';
-import AddForm from './AddForm.jsx';
+import ModalForm from './ModalForm.jsx';
 
 function Add() {
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ function Add() {
 
   return (
     <ModalContainer title={t('modals.add.title')} handleClose={handleClose}>
-      <AddForm ref={formRef} handleClose={handleClose} />
+      <ModalForm ref={formRef} event="newChannel" initialValue="" handleClose={handleClose} />
     </ModalContainer>
   );
 }
