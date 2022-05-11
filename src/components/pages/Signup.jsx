@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import schema from '../../validationSchema.js';
 import useAuth from '../../hooks/index.jsx';
 import FormWrapper from '../FormWrapper.jsx';
-import handleSubmit from '../../handleSubmit.js';
+import { createAuthHandleSubmit } from '../../handleSubmit.js';
 import getTextfields from '../../getTextfields.jsx';
 
 function Signup() {
@@ -17,7 +17,9 @@ function Signup() {
   const formik = useFormik({
     initialValues: { login: '', password: '', confirmPassword: '' },
     validationSchema: schema,
-    onSubmit: handleSubmit(auth, navigate, i18n, setIsSubmitted, 'signupPath'),
+    onSubmit: createAuthHandleSubmit({
+      auth, navigate, i18n, setIsSubmitted,
+    }, 'signupPath'),
   });
   if (auth.loggedIn) {
     navigate('/', { replace: true });

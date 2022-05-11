@@ -5,7 +5,7 @@ import { Form, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import useAuth from '../../hooks/index.jsx';
 import FormWrapper from '../FormWrapper.jsx';
-import handleSubmit from '../../handleSubmit.js';
+import { createAuthHandleSubmit } from '../../handleSubmit.js';
 import getTextfields from '../../getTextfields.jsx';
 
 function Login() {
@@ -18,7 +18,9 @@ function Login() {
   }
   const formik = useFormik({
     initialValues: { login: '', password: '' },
-    onSubmit: handleSubmit(auth, navigate, i18n, setIsSubmitted, 'loginPath'),
+    onSubmit: createAuthHandleSubmit({
+      auth, navigate, i18n, setIsSubmitted,
+    }, 'loginPath'),
   });
   return (
     <FormWrapper title={t('loginPage.title')}>
