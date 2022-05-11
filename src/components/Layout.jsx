@@ -1,36 +1,21 @@
 import React from 'react';
-import { Outlet, Link, useNavigate } from 'react-router-dom';
-import {
-  Navbar, Container, Nav, Button,
-} from 'react-bootstrap';
+import { Outlet, Link } from 'react-router-dom';
+import { Navbar, Container, Nav } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import useAuth from '../hooks/index.jsx';
+import LogoutButton from './LogoutButton.jsx';
 
 function Layout() {
-  const { logOut, loggedIn } = useAuth();
-  const navigate = useNavigate();
+  const { loggedIn } = useAuth();
   const { t } = useTranslation();
 
-  const logoutButton = (
-    <Nav.Link
-      as={Button}
-      variant="outline-secondary"
-      onClick={() => {
-        logOut();
-        navigate('/login', { replace: true });
-      }}
-      className="text-white me-3 py-0"
-    >
-      {t('layoutPage.logoutButton')}
-    </Nav.Link>
-  );
   return (
     <div className="d-flex flex-column h-100">
       <Navbar bg="dark" variant="dark" className="text-white">
         <Container>
           <Navbar.Brand as={Link} to="/" className="px-3 ms-3">Hexlet Chat</Navbar.Brand>
           <Nav>
-            {loggedIn ? logoutButton : ''}
+            {loggedIn ? <LogoutButton /> : ''}
             <Nav.Link as={Link} to="/about" className="active text-reset me-3">{t('layoutPage.title')}</Nav.Link>
           </Nav>
         </Container>

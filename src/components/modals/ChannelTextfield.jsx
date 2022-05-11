@@ -3,7 +3,7 @@ import { Form, FloatingLabel } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import cn from 'classnames';
 
-const ChannelTextfield = React.forwardRef((props, ref) => {
+function ChannelTextfield(props) {
   const {
     label, id, type, onChange, onBlur, value, touched, error,
   } = props;
@@ -16,7 +16,6 @@ const ChannelTextfield = React.forwardRef((props, ref) => {
     <FloatingLabel controlId={id} label={label} className="form-floating mb-4">
       <Form.Control
         autoComplete="off"
-        ref={ref}
         className={inputClass}
         {...{
           type, onChange, onBlur, value,
@@ -28,8 +27,6 @@ const ChannelTextfield = React.forwardRef((props, ref) => {
       </div>
     </FloatingLabel>
   );
-});
-
-ChannelTextfield.displayName = 'ChannelTextfield';
+}
 
 export default ChannelTextfield;
