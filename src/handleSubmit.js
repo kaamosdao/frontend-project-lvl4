@@ -39,7 +39,7 @@ export const createAuthHandleSubmit = (elements, path) => async (values, actions
 
 // createModalHandleSubmit for Modals
 
-const toggleFormElementsState = (formRef, operation) => {
+export const toggleFormElementsState = (formRef, operation) => {
   if (operation === 'enable') {
     Array.from(formRef.current.elements).forEach((element) => {
       element.removeAttribute('disabled');
@@ -51,7 +51,7 @@ const toggleFormElementsState = (formRef, operation) => {
   }
 };
 
-const setTimeoutReaction = (formRef, translate) => {
+export const setTimeoutReaction = (formRef, translate) => {
   const timeoutID = setTimeout(() => {
     showToast(translate('feedbackMessages.errors.response'), 'warn');
     toggleFormElementsState(formRef, 'enable');

@@ -4,29 +4,9 @@ import { Form } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useApp } from '../../hooks/index.jsx';
 import localStorageData from '../../localStorageData.js';
+import { toggleFormElementsState, setTimeoutReaction } from '../../handleSubmit.js';
 import showToast from '../../showToast.js';
 import Input from './Input.jsx';
-
-const toggleFormElementsState = (formEl, operation) => {
-  if (operation === 'enable') {
-    Array.from(formEl.current.elements).forEach((element) => {
-      element.removeAttribute('disabled');
-    });
-  } else {
-    Array.from(formEl.current.elements).forEach((element) => {
-      element.setAttribute('disabled', true);
-    });
-  }
-};
-
-const setTimeoutReaction = (show, formEl, translate) => {
-  const timeoutID = setTimeout(() => {
-    show(translate('feedbackMessages.errors.network'), 'error');
-    toggleFormElementsState(formEl, 'enable');
-    formEl.current.querySelector('input').focus();
-  }, 5000);
-  return timeoutID;
-};
 
 const emitData = (formEl, socket, timeoutID, setInputValue, data) => {
   socket.emit('newMessage', data, (response) => {
@@ -41,7 +21,7 @@ const emitData = (formEl, socket, timeoutID, setInputValue, data) => {
 const createHandleSubmit = (elements) => (event) => {
   event.preventDefault();
   const {
-    socket, formEl, showToast: show, t: translate, inputValue, currentChannelId, setInputValue,
+    socket, formEl, translate, inputValue, currentChannelId, setInputValue,
   } = elements;
   const username = localStorageData.getUsername();
   if (!socket.connected) {
@@ -50,7 +30,7 @@ const createHandleSubmit = (elements) => (event) => {
   }
   const data = { username, message: inputValue, channelId: currentChannelId };
   toggleFormElementsState(formEl, 'disable');
-  const timeoutID = setTimeoutReaction(show, formEl, translate);
+  const timeoutID = setTimeoutReaction(formEl, translate);
   emitData(formEl, socket, timeoutID, setInputValue, data);
 };
 
@@ -65,7 +45,7 @@ function MessageForm() {
     setInputValue(event.target.value);
   };
   const elementsForSubmit = {
-    socket, formEl, showToast, t, inputValue, currentChannelId, setInputValue,
+    socket, formEl, translate: t, inputValue, currentChannelId, setInputValue,
   };
   const handleSubmit = createHandleSubmit(elementsForSubmit);
   useEffect(() => {
