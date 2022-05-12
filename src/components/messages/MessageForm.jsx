@@ -53,9 +53,11 @@ function MessageForm() {
   });
 
   return (
-    <Form ref={formEl} onSubmit={handleSubmit} noValidate>
-      <Input handleChange={handleChange} inputValue={inputValue} />
-    </Form>
+    <div className="form-message mt-auto px-5 py-3">
+      <Form ref={formEl} onSubmit={handleSubmit} noValidate>
+        <Input handleChange={handleChange} inputValue={inputValue} />
+      </Form>
+    </div>
   );
 }
 

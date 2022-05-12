@@ -42,10 +42,10 @@ function Chat() {
   return (
     <Container className="h-100 my-4 overflow-hidden rounded shadow">
       <Row className="h-100 bg-white flex-md-row">
-        <Col md={2} className="col-4 border-end px-2">
+        <Col md={2} className="col-4 bg-light border-end px-2">
           <Channels />
         </Col>
-        <Col className="h-100">
+        <Col className="p-0 h-100">
           <Messages />
         </Col>
       </Row>

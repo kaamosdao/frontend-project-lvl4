@@ -39,6 +39,8 @@ export default {
         inputPlaceholder: 'Text message...',
         inputLabel: 'New message',
         sendButton: 'Send',
+        headerMessage_one: '{{count}} message',
+        headerMessage_other: '{{count}} messages',
       },
     },
     notfoundPage: {

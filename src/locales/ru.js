@@ -39,6 +39,9 @@ export default {
         inputPlaceholder: 'Введите сообщение...',
         inputLabel: 'Новое сообщение',
         sendButton: 'Отправить',
+        headerMessage_one: '{{count}} сообщение',
+        headerMessage_few: '{{count}} сообщения',
+        headerMessage_many: '{{count}} сообщений',
       },
     },
     notfoundPage: {

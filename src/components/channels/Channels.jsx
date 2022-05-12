@@ -14,7 +14,7 @@ function Channels() {
 
   return (
     <>
-      <div className="d-flex justify-content-between mb-2 ps-2">
+      <div className="d-flex justify-content-between mb-3 mt-5 ps-2">
         <span className="channels-title">{t('homePage.channels.title')}</span>
         <Button
           onClick={() => showModal('adding')}
