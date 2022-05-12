@@ -41,6 +41,9 @@ export default {
         sendButton: 'Отправить',
       },
     },
+    notfoundPage: {
+      title: '404 Страница не найдена',
+    },
     modals: {
       add: {
         title: 'Добавить канал',

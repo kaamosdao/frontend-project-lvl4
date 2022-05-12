@@ -41,6 +41,9 @@ export default {
         sendButton: 'Send',
       },
     },
+    notfoundPage: {
+      title: '404 Page not found',
+    },
     modals: {
       add: {
         title: 'Add channel',
