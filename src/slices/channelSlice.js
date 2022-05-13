@@ -24,11 +24,11 @@ const channelSlice = createSlice({
     },
     removeChannel: (state, { payload }) => {
       const appState = state;
-      appState.items = state.items.filter((channel) => channel.id !== payload.id);
+      appState.items = removeItemFromState(appState, 'id', payload.id);
     },
     renameChannel: (state, { payload }) => {
       const appState = state;
-      const index = removeItemFromState(appState, 'id', payload);
+      const index = appState.items.findIndex((element) => element.id === payload.id);
       appState.items[index] = payload;
     },
   },

@@ -5,7 +5,6 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
-const { extendDefaultPlugins } = require('svgo');
 
 const mode = process.env.NODE_ENV || 'development';
 
@@ -78,11 +77,21 @@ module.exports = {
           implementation: ImageMinimizerPlugin.imageminMinify,
           options: {
             plugins: [
-              // Svgo configuration here https://github.com/svg/svgo#configuration
               [
                 'svgo',
                 {
-                  plugins: extendDefaultPlugins([
+                  plugins: [
+                    {
+                      name: 'preset-default',
+                      params: {
+                        overrides: {
+                          convertShapeToPath: {
+                            convertArcs: true,
+                          },
+                          convertPathData: false,
+                        },
+                      },
+                    },
                     {
                       name: 'removeViewBox',
                       active: false,
@@ -93,7 +102,7 @@ module.exports = {
                         attributes: [{ xmlns: 'http://www.w3.org/2000/svg' }],
                       },
                     },
-                  ]),
+                  ],
                 },
               ],
             ],

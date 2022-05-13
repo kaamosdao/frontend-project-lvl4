@@ -1,1 +1,1 @@
-export default (state, id, payload) => state.items.filter((message) => message[id] !== payload.id);
+export default (state, key, id) => state.items.filter((item) => item[key] !== id);

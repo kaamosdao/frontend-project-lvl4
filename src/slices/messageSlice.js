@@ -22,7 +22,7 @@ const messageSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(removeChannel, (state, { payload }) => {
       const appState = state;
-      appState.items = removeItemFromState(appState, 'channelId', payload);
+      appState.items = removeItemFromState(appState, 'channelId', payload.id);
     });
   },
 });
