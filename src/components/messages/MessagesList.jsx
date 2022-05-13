@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useApp } from '../../hooks/index.jsx';
 
@@ -6,6 +6,15 @@ function MessagesList() {
   const { filter } = useApp();
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
   const messages = useSelector((state) => state.messages.items);
+  const messagesEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   return (
     <div className="messages-container overflow-auto px-5">
@@ -17,6 +26,7 @@ function MessagesList() {
             {filter.clean(item.message)}
           </div>
         ))}
+      <div ref={messagesEndRef} />
     </div>
   );
 }
