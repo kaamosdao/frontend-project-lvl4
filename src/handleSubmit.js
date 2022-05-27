@@ -4,8 +4,8 @@ import showToast from './showToast.js';
 import { setCurrentChannel } from './slices/channelSlice.js';
 import { hideModal } from './slices/modalSlice.js';
 
-const handleNetworkError = (message, i18nInstance) => {
-  if (message === 'Network Error') {
+const handleNetworkError = (error, i18nInstance) => {
+  if (axios.isAxiosError(error)) {
     showToast(i18nInstance.t('feedbackMessages.errors.network'), 'error');
   }
 };
@@ -22,7 +22,7 @@ export const createAuthHandleSubmit = (elements, path) => async (values, actions
     elements.navigate('/', { replace: true });
   } catch (error) {
     elements.setIsSubmitted(false);
-    handleNetworkError(error.message, elements.i18nInstance);
+    handleNetworkError(error, elements.i18n);
     switch (error.response.status) {
       case 401:
         actions.setErrors({ userNotFound: 'feedbackMessages.errors.userNotFound' });
