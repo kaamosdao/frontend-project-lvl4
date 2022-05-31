@@ -1,3 +1,5 @@
+/* eslint no-param-reassign: ["error", { "props": false }] */
+
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
@@ -10,14 +12,12 @@ const modalSlice = createSlice({
   initialState,
   reducers: {
     setModalInfo: (state, { payload }) => {
-      const appState = state;
-      appState.action = payload.action;
-      appState.item = payload.item;
+      state.action = payload.action;
+      state.item = payload.item;
     },
     hideModal: (state) => {
-      const appState = state;
-      appState.action = null;
-      appState.item = null;
+      state.action = null;
+      state.item = null;
     },
   },
 });

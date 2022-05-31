@@ -1,3 +1,5 @@
+/* eslint no-param-reassign: ["error", { "props": false }] */
+
 import { createSlice } from '@reduxjs/toolkit';
 import removeItemFromState from './removeItemFromState.js';
 
@@ -11,25 +13,20 @@ const channelSlice = createSlice({
   initialState,
   reducers: {
     setChannels: (state, { payload }) => {
-      const appState = state;
-      appState.items = payload;
+      state.items = payload;
     },
     addChannel: (state, { payload }) => {
-      const appState = state;
-      appState.items.push(payload);
+      state.items.push(payload);
     },
     setCurrentChannel: (state, { payload }) => {
-      const appState = state;
-      appState.currentChannelId = payload;
+      state.currentChannelId = payload;
     },
     removeChannel: (state, { payload }) => {
-      const appState = state;
-      appState.items = removeItemFromState(appState, 'id', payload.id);
+      state.items = removeItemFromState(state, 'id', payload.id);
     },
     renameChannel: (state, { payload }) => {
-      const appState = state;
-      const index = appState.items.findIndex((element) => element.id === payload.id);
-      appState.items[index] = payload;
+      const index = state.items.findIndex((element) => element.id === payload.id);
+      state.items[index] = payload;
     },
   },
 });
