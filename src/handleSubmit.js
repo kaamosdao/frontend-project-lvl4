@@ -5,7 +5,7 @@ import { setCurrentChannel } from './slices/channelSlice.js';
 import { hideModal } from './slices/modalSlice.js';
 
 const handleNetworkError = (error, i18nInstance) => {
-  if (axios.isAxiosError(error)) {
+  if (error.isAxiosError) {
     showToast(i18nInstance.t('feedbackMessages.errors.network'), 'error');
   }
 };
