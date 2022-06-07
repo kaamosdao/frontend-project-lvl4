@@ -7,7 +7,7 @@ import { setChannels, setCurrentChannel } from '../../slices/channelSlice.js';
 import { setMessages } from '../../slices/messageSlice.js';
 import useAuth from '../../hooks/index.jsx';
 import localStorageData from '../../localStorageData.js';
-import routes from '../../routes.js';
+import serverRoutes, { clientRoutes } from '../../routes.js';
 import Channels from '../channels/Channels.jsx';
 import Messages from '../messages/Messages.jsx';
 
@@ -18,13 +18,13 @@ const fetchData = async (token, dispatch, logOut, navigate) => {
     },
   };
   try {
-    const { data } = await axios.get(routes.dataPath(), options);
+    const { data } = await axios.get(serverRoutes.dataPath(), options);
     dispatch(setChannels(data.channels));
     dispatch(setMessages(data.messages));
     dispatch(setCurrentChannel(data.currentChannelId));
   } catch (error) {
     logOut();
-    navigate('/login');
+    navigate(clientRoutes.login());
     throw error;
   }
 };

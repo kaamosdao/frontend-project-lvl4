@@ -9,6 +9,7 @@ import Notfound from './components/pages/Notfound.jsx';
 import Layout from './components/Layout.jsx';
 import About from './components/pages/About.jsx';
 import useAuth from './hooks/index.jsx';
+import { clientRoutes } from './routes.js';
 
 function RequireAuth({ children, redirectTo }) {
   const { loggedIn } = useAuth();
@@ -23,7 +24,7 @@ function App() {
           <Route
             index
             element={(
-              <RequireAuth redirectTo="/login">
+              <RequireAuth redirectTo={clientRoutes.login()}>
                 <Chat />
               </RequireAuth>
             )}

@@ -7,6 +7,7 @@ import useAuth from '../../hooks/index.jsx';
 import FormWrapper from '../FormWrapper.jsx';
 import { createAuthHandleSubmit } from '../../handleSubmit.js';
 import getTextfields from '../../getTextfields.jsx';
+import { clientRoutes } from '../../routes.js';
 
 function Login() {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -14,7 +15,7 @@ function Login() {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
 
-  if (auth.loggedIn) navigate('/', { replace: true });
+  if (auth.loggedIn) navigate(clientRoutes.home(), { replace: true });
 
   const formik = useFormik({
     initialValues: { login: '', password: '' },

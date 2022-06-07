@@ -8,6 +8,7 @@ import useAuth from '../../hooks/index.jsx';
 import FormWrapper from '../FormWrapper.jsx';
 import { createAuthHandleSubmit } from '../../handleSubmit.js';
 import getTextfields from '../../getTextfields.jsx';
+import { clientRoutes } from '../../routes.js';
 
 function Signup() {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -22,7 +23,7 @@ function Signup() {
     }, 'signupPath'),
   });
   if (auth.loggedIn) {
-    navigate('/', { replace: true });
+    navigate(clientRoutes.home(), { replace: true });
   }
   return (
     <FormWrapper title={t('signupPage.title')}>

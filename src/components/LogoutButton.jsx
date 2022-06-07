@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Nav, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import useAuth from '../hooks/index.jsx';
+import { clientRoutes } from '../routes.js';
 
 function LogoutButton() {
   const { logOut } = useAuth();
@@ -15,7 +16,7 @@ function LogoutButton() {
       variant="outline-secondary"
       onClick={() => {
         logOut();
-        navigate('/login', { replace: true });
+        navigate(clientRoutes.login(), { replace: true });
       }}
       className="text-white me-3 py-0"
     >

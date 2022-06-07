@@ -7,6 +7,7 @@ import useAuth from '../hooks/index.jsx';
 import LogoutButton from './LogoutButton.jsx';
 import ButtonChangeLang from './ButtonChangeLang.jsx';
 import getModal from '../getModal.jsx';
+import { clientRoutes } from '../routes.js';
 
 function Layout() {
   const { loggedIn } = useAuth();
@@ -17,10 +18,10 @@ function Layout() {
     <div className="d-flex flex-column h-100">
       <Navbar bg="dark" variant="dark" className="text-white">
         <Container>
-          <Navbar.Brand as={Link} to="/" className="px-3 ms-3">Hexlet Chat</Navbar.Brand>
+          <Navbar.Brand as={Link} to={clientRoutes.home()} className="px-3 ms-3">Hexlet Chat</Navbar.Brand>
           <Nav>
             {loggedIn ? <LogoutButton /> : ''}
-            <Nav.Link as={Link} to="/about" className="active text-reset me-3">{t('layoutPage.title')}</Nav.Link>
+            <Nav.Link as={Link} to={clientRoutes.about()} className="active text-reset me-3">{t('layoutPage.title')}</Nav.Link>
             <ButtonChangeLang className="me-5" />
           </Nav>
         </Container>
