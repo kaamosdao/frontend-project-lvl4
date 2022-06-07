@@ -1,14 +1,17 @@
 import React from 'react';
 import { Outlet, Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { Navbar, Container, Nav } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import useAuth from '../hooks/index.jsx';
 import LogoutButton from './LogoutButton.jsx';
 import ButtonChangeLang from './ButtonChangeLang.jsx';
+import getModal from '../getModal.jsx';
 
 function Layout() {
   const { loggedIn } = useAuth();
   const { t } = useTranslation();
+  const modalAction = useSelector((state) => state.modal.action);
 
   return (
     <div className="d-flex flex-column h-100">
@@ -23,6 +26,7 @@ function Layout() {
         </Container>
       </Navbar>
       <Outlet />
+      {modalAction && getModal(modalAction)}
     </div>
   );
 }

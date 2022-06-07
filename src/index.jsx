@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Provider, useSelector } from 'react-redux';
+import { Provider } from 'react-redux';
 import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 import { ToastContainer } from 'react-toastify';
 import filter from 'leo-profanity';
@@ -15,12 +15,11 @@ import {
 import AuthContext from './hooks/AuthContext.jsx';
 import AppContext from './hooks/AppContext.jsx';
 import localStorageData from './localStorageData.js';
-import getModal from './getModal.jsx';
+// import getModal from './getModal.jsx';
 
 function AuthProvider({ children }) {
   const isLogined = localStorageData.hasAuth();
   const [loggedIn, setLoggedIn] = useState(isLogined);
-  const modalAction = useSelector((state) => state.modal.action);
   const logIn = (username, token) => {
     localStorageData.setAuth(username, token);
     setLoggedIn(true);
@@ -33,7 +32,6 @@ function AuthProvider({ children }) {
   return (
     <AuthContext.Provider value={providerData}>
       {children}
-      {modalAction && getModal(modalAction)}
     </AuthContext.Provider>
   );
 }
