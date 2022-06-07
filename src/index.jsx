@@ -15,7 +15,6 @@ import {
 import AuthContext from './hooks/AuthContext.jsx';
 import AppContext from './hooks/AppContext.jsx';
 import localStorageData from './localStorageData.js';
-// import getModal from './getModal.jsx';
 
 function AuthProvider({ children }) {
   const isLogined = localStorageData.hasAuth();
@@ -36,11 +35,8 @@ function AuthProvider({ children }) {
   );
 }
 
-function AppProvider({ profanityFilter, socket, children }) {
-  const providerData = useMemo(() => ({
-    socket,
-    filter: profanityFilter,
-  }), [profanityFilter, socket]);
+function AppProvider({ socket, children }) {
+  const providerData = useMemo(() => ({ socket }), [socket]);
   return (
     <AppContext.Provider value={providerData}>
       {children}
@@ -89,7 +85,7 @@ export default async (socket) => {
     <Provider store={store}>
       <RollbarProvider config={rollbarConfig}>
         <ErrorBoundary>
-          <AppProvider socket={socket} profanityFilter={filter}>
+          <AppProvider socket={socket}>
             <AuthProvider>
               <App />
               <ToastContainer />

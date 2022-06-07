@@ -1,9 +1,8 @@
 import React, { useRef, useEffect } from 'react';
+import filter from 'leo-profanity';
 import { useSelector } from 'react-redux';
-import { useApp } from '../../hooks/index.jsx';
 
 function MessagesList() {
-  const { filter } = useApp();
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
   const messages = useSelector((state) => state.messages.items);
   const messagesEndRef = useRef(null);

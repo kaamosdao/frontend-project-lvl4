@@ -12,7 +12,7 @@ function Input({ handleChange, inputValue }) {
       <FormControl
         className="rounded-start"
         id="newMessage"
-        aria-label="New message"
+        aria-label="Новое сообщение"
         aria-describedby="basic-addon1"
         placeholder={t('homePage.messages.inputPlaceholder')}
         onChange={handleChange}
