@@ -3,13 +3,13 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Col, Container, Row } from 'react-bootstrap';
-import { setChannels, setCurrentChannel } from '../slices/channelSlice.js';
-import { setMessages } from '../slices/messageSlice.js';
-import useAuth from '../hooks/index.jsx';
-import localStorageData from '../localStorageData.js';
-import routes from '../routes.js';
-import Channels from './channels/Channels.jsx';
-import Messages from './messages/Messages.jsx';
+import { setChannels, setCurrentChannel } from '../../slices/channelSlice.js';
+import { setMessages } from '../../slices/messageSlice.js';
+import useAuth from '../../hooks/index.jsx';
+import localStorageData from '../../localStorageData.js';
+import routes from '../../routes.js';
+import Channels from '../channels/Channels.jsx';
+import Messages from '../messages/Messages.jsx';
 
 const fetchData = async (token, dispatch, logOut, navigate) => {
   const options = {
