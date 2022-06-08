@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import { channelsSchema } from '../../validationSchema.js';
 import { useApp } from '../../hooks/index.jsx';
-import { getChannelField } from '../../getTextfields.jsx';
+import ChannelTextfield from './ChannelTextfield.jsx';
 import createModalHandleSubmit from '../../handleSubmit.js';
 
 function FormComponent({
@@ -20,13 +20,33 @@ function FormComponent({
     initialValues: { channel: initialValue },
     validationSchema: channelsSchema,
     onSubmit: createModalHandleSubmit(event, {
-      socket, channels, formRef: ref, t, dispatch, id,
+      socket,
+      channels,
+      formRef: ref,
+      t,
+      dispatch,
+      id,
     }),
   });
   return (
-    <Form ref={ref} onSubmit={formik.handleSubmit} className="w-100 m-auto mb-4 p-0">
-      {getChannelField('rename', t, formik)}
-      <Button variant="primary" type="submit">{t('modals.add.submitButton')}</Button>
+    <Form
+      ref={ref}
+      onSubmit={formik.handleSubmit}
+      className="w-100 m-auto mb-4 p-0"
+    >
+      <ChannelTextfield
+        label={t('modals.rename.input')}
+        id="channel"
+        type="text"
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        value={formik.values.channel}
+        touched={formik.touched.channel}
+        error={formik.errors.channel || formik.errors.channelExist}
+      />
+      <Button variant="primary" type="submit">
+        {t('modals.add.submitButton')}
+      </Button>
       <Button variant="secondary" onClick={handleClose} className="ms-2">
         {t('modals.add.closeButton')}
       </Button>
