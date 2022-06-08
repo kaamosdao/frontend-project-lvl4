@@ -1,41 +1,6 @@
-import axios from 'axios';
-import routes from './routes.js';
 import showToast from './showToast.js';
 import { setCurrentChannel } from './slices/channelSlice.js';
 import { hideModal } from './slices/modalSlice.js';
-
-const handleNetworkError = (error, i18nInstance) => {
-  if (error.isAxiosError) {
-    showToast(i18nInstance.t('feedbackMessages.errors.network'), 'error');
-  }
-};
-
-export const createAuthHandleSubmit = (elements, path) => async (values, actions) => {
-  try {
-    elements.setIsSubmitted(true);
-    const { data } = await axios.post(routes[path](), {
-      username: values.login,
-      password: values.password,
-    });
-    elements.setIsSubmitted(false);
-    elements.auth.logIn(data.username, data.token);
-    elements.navigate('/', { replace: true });
-  } catch (error) {
-    elements.setIsSubmitted(false);
-    handleNetworkError(error, elements.i18n);
-    switch (error.response.status) {
-      case 401:
-        actions.setErrors({ userNotFound: 'feedbackMessages.errors.userNotFound' });
-        break;
-      case 409:
-        actions.setErrors({ userExist: 'feedbackMessages.errors.userExist' });
-        break;
-      default:
-        actions.setErrors({ unknown: 'feedbackMessages.errors.unknown' });
-        break;
-    }
-  }
-};
 
 // createModalHandleSubmit for Modals
 
