@@ -1,22 +1,59 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { Button, Form } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { useFormik } from 'formik';
+import { useApp } from '../../hooks/index.jsx';
 import { hideModal } from '../../slices/modalSlice.js';
+import showToast from '../../showToast.js';
 import ModalContainer from './ModalContainer.jsx';
-import DeleteForm from './DeleteForm.jsx';
+import setTimeoutReaction from '../../setTimeoutReaction.js';
 
 function Delete() {
   const dispatch = useDispatch();
+  const { socket } = useApp();
   const { t } = useTranslation();
-  const formRef = React.createRef();
+  const { id } = useSelector((state) => state.modal.item);
 
+  const formik = useFormik({
+    initialValues: { id },
+    onSubmit: (values, actions) => {
+      if (!socket.connected) {
+        showToast(t('feedbackMessages.errors.network'), 'error');
+        actions.setSubmitting(false);
+        return;
+      }
+      const data = { id: values.id };
+      const timeoutID = setTimeoutReaction(actions, t);
+      socket.emit('removeChannel', data, (response) => {
+        if (response.status === 'ok') {
+          clearTimeout(timeoutID);
+          actions.setSubmitting(false);
+          showToast(t('feedbackMessages.channel.removed'), 'success');
+          dispatch(hideModal());
+        }
+      });
+    },
+  });
   const handleClose = () => {
     dispatch(hideModal());
   };
 
   return (
     <ModalContainer title={t('modals.delete.title')} handleClose={handleClose}>
-      <DeleteForm ref={formRef} handleClose={handleClose} />
+      <Form onSubmit={formik.handleSubmit} className="w-100 m-auto mb-4 p-0">
+        <Button variant="danger" type="submit" disabled={formik.isSubmitting}>
+          {t('modals.delete.submitButton')}
+        </Button>
+        <Button
+          variant="secondary"
+          className="ms-2"
+          onClick={handleClose}
+          disabled={formik.isSubmitting}
+        >
+          {t('modals.delete.closeButton')}
+        </Button>
+      </Form>
     </ModalContainer>
   );
 }

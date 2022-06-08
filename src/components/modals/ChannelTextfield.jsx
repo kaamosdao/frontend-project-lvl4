@@ -5,7 +5,7 @@ import cn from 'classnames';
 
 function ChannelTextfield(props) {
   const {
-    label, id, type, onChange, onBlur, value, touched, error,
+    label, id, type, onChange, onBlur, value, touched, error, disabled,
   } = props;
   const { t } = useTranslation();
   const inputClass = cn('form-control', {
@@ -18,7 +18,7 @@ function ChannelTextfield(props) {
         autoComplete="off"
         className={inputClass}
         {...{
-          type, onChange, onBlur, value,
+          type, onChange, onBlur, value, disabled,
         }}
         placeholder={label}
       />
