@@ -1,15 +1,22 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, FloatingLabel } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
+import cn from 'classnames';
 import schema from '../../validationSchema.js';
 import useAuth from '../../hooks/index.jsx';
 import FormWrapper from '../FormWrapper.jsx';
 import serverRoutes, { clientRoutes } from '../../routes.js';
 import handleError from '../../handleError.js';
-import TextField from '../TextField.jsx';
+
+const getInputClass = (inputName, errors, touched) => {
+  const inputHasError = errors[inputName] || errors.userExist;
+  return cn('form-control', {
+    'is-invalid': touched && inputHasError,
+  });
+};
 
 function Signup() {
   const navigate = useNavigate();
@@ -39,48 +46,59 @@ function Signup() {
   return (
     <FormWrapper title={t('signupPage.title')}>
       <Form onSubmit={formik.handleSubmit} className="w-50 m-auto mb-4 p-0">
-        <TextField
-          label={t('signupPage.login')}
-          id="login"
-          type="text"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.login}
-          touched={formik.touched.login}
-          error={formik.errors.login || formik.errors.userExist}
-          autoComplete="username"
-          required
-          disabled={formik.isSubmitting}
-          key="login"
-        />
-        <TextField
-          label={t('signupPage.password')}
-          id="password"
-          type="password"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.password}
-          touched={formik.touched.password}
-          error={formik.errors.password || formik.errors.userExist}
-          autoComplete="current-password"
-          required
-          disabled={formik.isSubmitting}
-          key="password"
-        />
-        <TextField
-          label={t('signupPage.confirmPassword')}
-          id="confirmPassword"
-          type="password"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.confirmPassword}
-          touched={formik.touched.confirmPassword}
-          error={formik.errors.confirmPassword || formik.errors.userExist}
-          autoComplete="current-password"
-          required
-          disabled={formik.isSubmitting}
-          key="confirmPassword"
-        />
+
+        <FloatingLabel controlId="login" label={t('signupPage.login')} className="form-floating mb-4">
+          <Form.Control
+            className={getInputClass('login', formik.errors, formik.touched.login)}
+            type="text"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.login}
+            autoComplete="username"
+            required
+            disabled={formik.isSubmitting}
+            placeholder={t('signupPage.login')}
+          />
+          <div className="invalid-tooltip">
+            {formik.touched && t(formik.errors.login)}
+          </div>
+        </FloatingLabel>
+
+        <FloatingLabel controlId="password" label={t('signupPage.password')} className="form-floating mb-4">
+          <Form.Control
+            className={getInputClass('password', formik.errors, formik.touched.password)}
+            type="password"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.password}
+            autoComplete="current-password"
+            required
+            disabled={formik.isSubmitting}
+            placeholder={t('signupPage.password')}
+          />
+          <div className="invalid-tooltip">
+            {formik.touched && t(formik.errors.password)}
+          </div>
+        </FloatingLabel>
+
+        <FloatingLabel controlId="confirmPassword" label={t('signupPage.confirmPassword')} className="form-floating mb-4">
+          <Form.Control
+            className={getInputClass('confirmPassword', formik.errors, formik.touched.confirmPassword)}
+            type="password"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.confirmPassword}
+            autoComplete="current-password"
+            required
+            disabled={formik.isSubmitting}
+            placeholder={t('signupPage.confirmPassword')}
+          />
+          <div className="invalid-tooltip">
+            {formik.touched && t(formik.errors.confirmPassword)}
+            {formik.errors.userExist && t(formik.errors.userExist)}
+          </div>
+        </FloatingLabel>
+
         <Button
           disabled={formik.isSubmitting}
           type="submit"
