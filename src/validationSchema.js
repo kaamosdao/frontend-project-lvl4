@@ -1,11 +1,15 @@
 import * as yup from 'yup';
 
-export const channelsSchema = yup.object().shape({
-  channel: yup.string()
-    .min(3, 'feedbackMessages.errors.channels.min')
-    .max(20, 'feedbackMessages.errors.channels.max')
-    .required('feedbackMessages.errors.channels.empty'),
-});
+export const channelsSchema = (channels) => {
+  const names = channels.map((channel) => channel.name);
+  return yup.object().shape({
+    channel: yup.string()
+      .min(3, 'feedbackMessages.errors.channels.min')
+      .max(20, 'feedbackMessages.errors.channels.max')
+      .notOneOf(names, 'feedbackMessages.errors.channels.exist')
+      .required('feedbackMessages.errors.channels.empty'),
+  });
+};
 
 export default yup.object().shape({
   login: yup.string()

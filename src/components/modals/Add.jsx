@@ -23,15 +23,8 @@ function Add() {
 
   const formik = useFormik({
     initialValues: { channel: '' },
-    validationSchema: channelsSchema,
+    validationSchema: channelsSchema(channels),
     onSubmit: (values, actions) => {
-      const isAlreadyExist = channels.find((item) => item.name === values.channel);
-      if (isAlreadyExist) {
-        actions.setErrors({ channelExist: t('feedbackMessages.errors.channels.exist') });
-        actions.setSubmitting(false);
-        formRef.current.querySelector('input').focus();
-        return;
-      }
       if (!socket.connected) {
         showToast(t('feedbackMessages.errors.network'), 'error');
         actions.setSubmitting(false);
