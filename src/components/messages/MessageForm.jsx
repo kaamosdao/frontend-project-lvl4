@@ -13,9 +13,7 @@ function MessageForm() {
   const { socket } = useSocket();
   const { t } = useTranslation();
   const formEl = useRef(null);
-  const currentChannelId = useSelector(
-    (state) => state.channels.currentChannelId
-  );
+  const currentChannelId = useSelector((state) => state.channels.currentChannelId);
 
   useEffect(() => {
     formEl.current.querySelector('input').focus();
