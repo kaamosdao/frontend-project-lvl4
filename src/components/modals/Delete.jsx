@@ -6,7 +6,6 @@ import { useFormik } from 'formik';
 import { useApp } from '../../hooks/index.jsx';
 import { hideModal } from '../../slices/modalSlice.js';
 import showToast from '../../showToast.js';
-import ModalContainer from './ModalContainer.jsx';
 import setTimeoutReaction from '../../setTimeoutReaction.js';
 
 function Delete() {
@@ -35,26 +34,25 @@ function Delete() {
       });
     },
   });
+
   const handleClose = () => {
     dispatch(hideModal());
   };
 
   return (
-    <ModalContainer title={t('modals.delete.title')} handleClose={handleClose}>
-      <Form onSubmit={formik.handleSubmit} className="w-100 m-auto mb-4 p-0">
-        <Button variant="danger" type="submit" disabled={formik.isSubmitting}>
-          {t('modals.delete.submitButton')}
-        </Button>
-        <Button
-          variant="secondary"
-          className="ms-2"
-          onClick={handleClose}
-          disabled={formik.isSubmitting}
-        >
-          {t('modals.delete.closeButton')}
-        </Button>
-      </Form>
-    </ModalContainer>
+    <Form onSubmit={formik.handleSubmit} className="w-100 m-auto mb-4 p-0">
+      <Button variant="danger" type="submit" disabled={formik.isSubmitting}>
+        {t('modals.delete.submitButton')}
+      </Button>
+      <Button
+        variant="secondary"
+        className="ms-2"
+        onClick={handleClose}
+        disabled={formik.isSubmitting}
+      >
+        {t('modals.delete.closeButton')}
+      </Button>
+    </Form>
   );
 }
 

@@ -1,10 +1,17 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Button, Form } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { hideModal } from '../../slices/modalSlice.js';
 import ChannelTextfield from './ChannelTextfield.jsx';
 
-function FormComponent({ handleClose, formik }, ref) {
+function FormComponent({ formik }, ref) {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+
+  const handleClose = () => {
+    dispatch(hideModal());
+  };
 
   return (
     <Form

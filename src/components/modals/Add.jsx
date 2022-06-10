@@ -5,7 +5,6 @@ import { useFormik } from 'formik';
 import { useApp } from '../../hooks/index.jsx';
 import { channelsSchema } from '../../validationSchema.js';
 import { hideModal } from '../../slices/modalSlice.js';
-import ModalContainer from './ModalContainer.jsx';
 import AddForm from './AddForm.jsx';
 import showToast from '../../showToast.js';
 import { setCurrentChannel } from '../../slices/channelSlice.js';
@@ -21,10 +20,6 @@ function Add() {
   useEffect(() => {
     formRef.current.querySelector('input').focus();
   });
-
-  const handleClose = () => {
-    dispatch(hideModal());
-  };
 
   const formik = useFormik({
     initialValues: { channel: '' },
@@ -58,9 +53,7 @@ function Add() {
   });
 
   return (
-    <ModalContainer title={t('modals.add.title')} handleClose={handleClose}>
-      <AddForm ref={formRef} formik={formik} handleClose={handleClose} />
-    </ModalContainer>
+    <AddForm ref={formRef} formik={formik} />
   );
 }
 

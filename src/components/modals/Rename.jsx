@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import { useApp } from '../../hooks/index.jsx';
 import { hideModal } from '../../slices/modalSlice.js';
-import ModalContainer from './ModalContainer.jsx';
 import RenameForm from './RenameForm.jsx';
 import showToast from '../../showToast.js';
 import { channelsSchema } from '../../validationSchema.js';
@@ -21,10 +20,6 @@ function Rename() {
   useEffect(() => {
     formRef.current.querySelector('input').focus();
   });
-
-  const handleClose = () => {
-    dispatch(hideModal());
-  };
 
   const formik = useFormik({
     initialValues: { channel: name },
@@ -57,9 +52,7 @@ function Rename() {
   });
 
   return (
-    <ModalContainer title={t('modals.rename.title')} handleClose={handleClose}>
-      <RenameForm ref={formRef} formik={formik} handleClose={handleClose} />
-    </ModalContainer>
+    <RenameForm ref={formRef} formik={formik} />
   );
 }
 
