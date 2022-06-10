@@ -3,14 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, Form } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
-import { useApp } from '../../hooks/index.jsx';
+import { useSocket } from '../../hooks/index.jsx';
 import { hideModal } from '../../slices/modalSlice.js';
 import showToast from '../../showToast.js';
 import setTimeoutReaction from '../../setTimeoutReaction.js';
 
 function Delete() {
   const dispatch = useDispatch();
-  const { socket } = useApp();
+  const { socket } = useSocket();
   const { t } = useTranslation();
   const { id } = useSelector((state) => state.modal.item);
 

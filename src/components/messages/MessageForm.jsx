@@ -3,17 +3,19 @@ import { useSelector } from 'react-redux';
 import { Form } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { useApp } from '../../hooks/index.jsx';
+import { useSocket } from '../../hooks/index.jsx';
 import localStorageData from '../../localStorageData.js';
 import setTimeoutReaction from '../../setTimeoutReaction.js';
 import showToast from '../../showToast.js';
 import Input from './Input.jsx';
 
 function MessageForm() {
-  const { socket } = useApp();
+  const { socket } = useSocket();
   const { t } = useTranslation();
   const formEl = useRef(null);
-  const currentChannelId = useSelector((state) => state.channels.currentChannelId);
+  const currentChannelId = useSelector(
+    (state) => state.channels.currentChannelId
+  );
 
   useEffect(() => {
     formEl.current.querySelector('input').focus();
@@ -28,7 +30,11 @@ function MessageForm() {
         actions.setSubmitting(false);
         return;
       }
-      const data = { username, message: values.message, channelId: currentChannelId };
+      const data = {
+        username,
+        message: values.message,
+        channelId: currentChannelId,
+      };
       const timeoutID = setTimeoutReaction(actions, t);
       socket.emit('newMessage', data, (response) => {
         if (response.status === 'ok') {

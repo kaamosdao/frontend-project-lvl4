@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
-import { useApp } from '../../hooks/index.jsx';
+import { useSocket } from '../../hooks/index.jsx';
 import { hideModal } from '../../slices/modalSlice.js';
 import RenameForm from './RenameForm.jsx';
 import showToast from '../../showToast.js';
@@ -12,7 +12,7 @@ import setTimeoutReaction from '../../setTimeoutReaction.js';
 function Rename() {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const { socket } = useApp();
+  const { socket } = useSocket();
   const { id, name } = useSelector((state) => state.modal.item);
   const channels = useSelector((state) => state.channels.items);
   const formRef = React.createRef();
@@ -23,15 +23,8 @@ function Rename() {
 
   const formik = useFormik({
     initialValues: { channel: name },
-    validationSchema: channelsSchema,
+    validationSchema: channelsSchema(channels),
     onSubmit: (values, actions) => {
-      const isAlreadyExist = channels.find((item) => item.name === values.channel);
-      if (isAlreadyExist) {
-        actions.setErrors({ channelExist: t('feedbackMessages.errors.channels.exist') });
-        actions.setSubmitting(false);
-        formRef.current.querySelector('input').focus();
-        return;
-      }
       if (!socket.connected) {
         showToast(t('feedbackMessages.errors.network'), 'error');
         actions.setSubmitting(false);
@@ -51,9 +44,7 @@ function Rename() {
     },
   });
 
-  return (
-    <RenameForm ref={formRef} formik={formik} />
-  );
+  return <RenameForm ref={formRef} formik={formik} />;
 }
 
 export default Rename;

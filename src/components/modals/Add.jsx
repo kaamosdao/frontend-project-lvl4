@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
-import { useApp } from '../../hooks/index.jsx';
+import { useSocket } from '../../hooks/index.jsx';
 import { channelsSchema } from '../../validationSchema.js';
 import { hideModal } from '../../slices/modalSlice.js';
 import AddForm from './AddForm.jsx';
@@ -14,7 +14,7 @@ function Add() {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const formRef = React.createRef();
-  const { socket } = useApp();
+  const { socket } = useSocket();
   const channels = useSelector((state) => state.channels.items);
 
   useEffect(() => {
@@ -45,9 +45,7 @@ function Add() {
     },
   });
 
-  return (
-    <AddForm ref={formRef} formik={formik} />
-  );
+  return <AddForm ref={formRef} formik={formik} />;
 }
 
 export default Add;

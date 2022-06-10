@@ -10,10 +10,13 @@ import App from './App.jsx';
 import store from './slices/index.js';
 import { addMessage } from './slices/messageSlice.js';
 import {
-  addChannel, setCurrentChannel, removeChannel, renameChannel,
+  addChannel,
+  setCurrentChannel,
+  removeChannel,
+  renameChannel,
 } from './slices/channelSlice.js';
 import AuthContext from './hooks/AuthContext.jsx';
-import AppContext from './hooks/AppContext.jsx';
+import SocketContext from './hooks/SocketContext.jsx';
 import localStorageData from './localStorageData.js';
 
 function AuthProvider({ children }) {
@@ -29,18 +32,16 @@ function AuthProvider({ children }) {
   };
   const providerData = useMemo(() => ({ loggedIn, logIn, logOut }), [loggedIn]);
   return (
-    <AuthContext.Provider value={providerData}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={providerData}>{children}</AuthContext.Provider>
   );
 }
 
 function AppProvider({ socket, children }) {
   const providerData = useMemo(() => ({ socket }), [socket]);
   return (
-    <AppContext.Provider value={providerData}>
+    <SocketContext.Provider value={providerData}>
       {children}
-    </AppContext.Provider>
+    </SocketContext.Provider>
   );
 }
 
@@ -48,7 +49,7 @@ export default async (socket) => {
   const i18nInstance = i18next.createInstance();
 
   await i18nInstance
-  // .use(LanguageDetector)
+    // .use(LanguageDetector)
     .use(initReactI18next)
     .init({
       debug: true,
