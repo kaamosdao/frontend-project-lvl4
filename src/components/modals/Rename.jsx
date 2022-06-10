@@ -69,6 +69,7 @@ function Rename() {
           value={formik.values.channel}
           disabled={formik.isSubmitting}
           placeholder={t('modals.rename.input')}
+          onFocus={() => inputRef.current.select()}
         />
         <div className="invalid-tooltip">
           {formik.touched && t(formik.errors.channel)}
