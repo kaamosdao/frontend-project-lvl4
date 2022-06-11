@@ -3,17 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import { Button, Form, FloatingLabel } from 'react-bootstrap';
-import cn from 'classnames';
 import { useSocket } from '../../hooks/index.jsx';
 import { channelsSchema } from '../../validationSchema.js';
 import { hideModal } from '../../slices/modalSlice.js';
 import showToast from '../../showToast.js';
 import { setCurrentChannel } from '../../slices/channelSlice.js';
-import setTimeoutReaction from '../../setTimeoutReaction.js';
-
-const getInputClass = (isValid) => cn('form-control', {
-  'is-invalid': !isValid,
-});
+import makeSocketRequest from '../../makeSocketRequest.js';
+import { getInputClass } from '../../getInputClass.js';
 
 function Add() {
   const dispatch = useDispatch();
@@ -40,17 +36,18 @@ function Add() {
         inputRef.current.focus();
         return;
       }
-      const timeoutID = setTimeoutReaction(actions, t);
       const data = { name: values.channel };
-      socket.emit('newChannel', data, (response) => {
-        if (response.status === 'ok') {
-          clearTimeout(timeoutID);
+      makeSocketRequest(data, socket, 'newChannel')
+        .then((response) => {
           actions.setSubmitting(false);
           showToast(t('feedbackMessages.channel.added'), 'success');
           dispatch(hideModal());
-          dispatch(setCurrentChannel(response.data.id));
-        }
-      });
+          dispatch(setCurrentChannel(response.id));
+        })
+        .catch(() => {
+          actions.setSubmitting(false);
+          showToast(t('feedbackMessages.errors.response'), 'warn');
+        });
     },
   });
 

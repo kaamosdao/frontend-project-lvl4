@@ -6,7 +6,7 @@ import { useFormik } from 'formik';
 import { useSocket } from '../../hooks/index.jsx';
 import { hideModal } from '../../slices/modalSlice.js';
 import showToast from '../../showToast.js';
-import setTimeoutReaction from '../../setTimeoutReaction.js';
+import makeSocketRequest from '../../makeSocketRequest.js';
 
 function Delete() {
   const dispatch = useDispatch();
@@ -23,15 +23,16 @@ function Delete() {
         return;
       }
       const data = { id: values.id };
-      const timeoutID = setTimeoutReaction(actions, t);
-      socket.emit('removeChannel', data, (response) => {
-        if (response.status === 'ok') {
-          clearTimeout(timeoutID);
+      makeSocketRequest(data, socket, 'removeChannel')
+        .then(() => {
           actions.setSubmitting(false);
           showToast(t('feedbackMessages.channel.removed'), 'success');
           dispatch(hideModal());
-        }
-      });
+        })
+        .catch(() => {
+          actions.setSubmitting(false);
+          showToast(t('feedbackMessages.errors.response'), 'warn');
+        });
     },
   });
 

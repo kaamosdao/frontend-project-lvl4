@@ -4,19 +4,12 @@ import { useFormik } from 'formik';
 import { Form, Button, FloatingLabel } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
-import cn from 'classnames';
 import schema from '../../validationSchema.js';
 import useAuth from '../../hooks/index.jsx';
 import FormWrapper from '../FormWrapper.jsx';
 import serverRoutes, { clientRoutes } from '../../routes.js';
 import handleError from '../../handleError.js';
-
-const getInputClass = (inputName, errors, touched) => {
-  const inputHasError = errors[inputName] || errors.userExist;
-  return cn('form-control', {
-    'is-invalid': touched && inputHasError,
-  });
-};
+import getSignupInputClass from '../../getInputClass.js';
 
 function Signup() {
   const navigate = useNavigate();
@@ -49,7 +42,7 @@ function Signup() {
 
         <FloatingLabel controlId="login" label={t('signupPage.login')} className="form-floating mb-4">
           <Form.Control
-            className={getInputClass('login', formik.errors, formik.touched.login)}
+            className={getSignupInputClass('login', formik.errors, formik.touched.login)}
             type="text"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -66,7 +59,7 @@ function Signup() {
 
         <FloatingLabel controlId="password" label={t('signupPage.password')} className="form-floating mb-4">
           <Form.Control
-            className={getInputClass('password', formik.errors, formik.touched.password)}
+            className={getSignupInputClass('password', formik.errors, formik.touched.password)}
             type="password"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -83,7 +76,7 @@ function Signup() {
 
         <FloatingLabel controlId="confirmPassword" label={t('signupPage.confirmPassword')} className="form-floating mb-4">
           <Form.Control
-            className={getInputClass('confirmPassword', formik.errors, formik.touched.confirmPassword)}
+            className={getSignupInputClass('confirmPassword', formik.errors, formik.touched.confirmPassword)}
             type="password"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}

@@ -4,15 +4,11 @@ import { useFormik } from 'formik';
 import { Form, Button, FloatingLabel } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
-import cn from 'classnames';
 import useAuth from '../../hooks/index.jsx';
 import FormWrapper from '../FormWrapper.jsx';
 import serverRoutes, { clientRoutes } from '../../routes.js';
 import handleError from '../../handleError.js';
-
-const getInputClass = (isValid) => cn('form-control', {
-  'is-invalid': !isValid,
-});
+import { getInputClass } from '../../getInputClass.js';
 
 function Login() {
   const auth = useAuth();

@@ -5,9 +5,9 @@ import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useSocket } from '../../hooks/index.jsx';
 import localStorageData from '../../localStorageData.js';
-import setTimeoutReaction from '../../setTimeoutReaction.js';
 import showToast from '../../showToast.js';
 import Input from './Input.jsx';
+import makeSocketRequest from '../../makeSocketRequest.js';
 
 function MessageForm() {
   const { socket } = useSocket();
@@ -33,14 +33,15 @@ function MessageForm() {
         message: values.message,
         channelId: currentChannelId,
       };
-      const timeoutID = setTimeoutReaction(actions, t);
-      socket.emit('newMessage', data, (response) => {
-        if (response.status === 'ok') {
-          clearTimeout(timeoutID);
+      makeSocketRequest(data, socket, 'newMessage')
+        .then(() => {
           actions.setSubmitting(false);
           actions.resetForm();
-        }
-      });
+        })
+        .catch(() => {
+          actions.setSubmitting(false);
+          showToast(t('feedbackMessages.errors.response'), 'warn');
+        });
     },
   });
 
