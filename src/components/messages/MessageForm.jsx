@@ -23,11 +23,6 @@ function MessageForm() {
     initialValues: { message: '' },
     onSubmit: (values, actions) => {
       const username = localStorageData.getUsername();
-      if (!socket.connected) {
-        showToast(t('feedbackMessages.errors.network'), 'error');
-        actions.setSubmitting(false);
-        return;
-      }
       const data = {
         username,
         message: values.message,
@@ -38,9 +33,9 @@ function MessageForm() {
           actions.setSubmitting(false);
           actions.resetForm();
         })
-        .catch(() => {
+        .catch((error) => {
           actions.setSubmitting(false);
-          showToast(t('feedbackMessages.errors.response'), 'warn');
+          showToast(t(error.message), error.toastType);
         });
     },
   });

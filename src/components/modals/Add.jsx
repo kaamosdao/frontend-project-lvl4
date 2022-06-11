@@ -30,12 +30,6 @@ function Add() {
     initialValues: { channel: '' },
     validationSchema: channelsSchema(channels),
     onSubmit: (values, actions) => {
-      if (!socket.connected) {
-        showToast(t('feedbackMessages.errors.network'), 'error');
-        actions.setSubmitting(false);
-        inputRef.current.focus();
-        return;
-      }
       const data = { name: values.channel };
       makeSocketRequest(data, socket, 'newChannel')
         .then((response) => {
@@ -44,9 +38,9 @@ function Add() {
           dispatch(hideModal());
           dispatch(setCurrentChannel(response.id));
         })
-        .catch(() => {
+        .catch((error) => {
           actions.setSubmitting(false);
-          showToast(t('feedbackMessages.errors.response'), 'warn');
+          showToast(t(error.message), error.toastType);
         });
     },
   });

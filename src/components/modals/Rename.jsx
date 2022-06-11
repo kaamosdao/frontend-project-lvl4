@@ -30,12 +30,6 @@ function Rename() {
     initialValues: { channel: name },
     validationSchema: channelsSchema(channels),
     onSubmit: (values, actions) => {
-      if (!socket.connected) {
-        showToast(t('feedbackMessages.errors.network'), 'error');
-        actions.setSubmitting(false);
-        inputRef.current.focus();
-        return;
-      }
       const data = { id, name: values.channel };
       makeSocketRequest(data, socket, 'renameChannel')
         .then(() => {
@@ -43,9 +37,9 @@ function Rename() {
           showToast(t('feedbackMessages.channel.renamed'), 'success');
           dispatch(hideModal());
         })
-        .catch(() => {
+        .catch((error) => {
           actions.setSubmitting(false);
-          showToast(t('feedbackMessages.errors.response'), 'warn');
+          showToast(t(error.message), error.toastType);
         });
     },
   });

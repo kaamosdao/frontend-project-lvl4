@@ -17,11 +17,6 @@ function Delete() {
   const formik = useFormik({
     initialValues: { id },
     onSubmit: (values, actions) => {
-      if (!socket.connected) {
-        showToast(t('feedbackMessages.errors.network'), 'error');
-        actions.setSubmitting(false);
-        return;
-      }
       const data = { id: values.id };
       makeSocketRequest(data, socket, 'removeChannel')
         .then(() => {
@@ -29,9 +24,9 @@ function Delete() {
           showToast(t('feedbackMessages.channel.removed'), 'success');
           dispatch(hideModal());
         })
-        .catch(() => {
+        .catch((error) => {
           actions.setSubmitting(false);
-          showToast(t('feedbackMessages.errors.response'), 'warn');
+          showToast(t(error.message), error.toastType);
         });
     },
   });
