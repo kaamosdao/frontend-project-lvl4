@@ -5,6 +5,7 @@ import {
 } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
+import filter from 'leo-profanity';
 import { useSocket } from '../../hooks/index.jsx';
 import localStorageData from '../../localStorageData.js';
 import showToast from '../../showToast.js';
@@ -26,7 +27,7 @@ function MessageForm() {
       const username = localStorageData.getUsername();
       const data = {
         username,
-        message: values.message,
+        message: filter.clean(values.message),
         channelId: currentChannelId,
       };
       try {

@@ -1,5 +1,4 @@
 import React, { useRef, useEffect } from 'react';
-import filter from 'leo-profanity';
 import { useSelector } from 'react-redux';
 
 function MessagesList() {
@@ -22,7 +21,7 @@ function MessagesList() {
         <div className="text-break mb-2" key={item.id}>
           <b>{item.username}</b>
           &#58;&nbsp;
-          {filter.clean(item.message)}
+          {item.message}
         </div>
       ))}
       <div ref={messagesEndRef} />

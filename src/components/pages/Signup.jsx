@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { Form, Button, FloatingLabel } from 'react-bootstrap';
@@ -22,6 +22,13 @@ function Signup() {
   const navigate = useNavigate();
   const auth = useAuth();
   const { t, i18n } = useTranslation();
+
+  useEffect(() => {
+    if (auth.loggedIn) {
+      navigate(clientRoutes.home(), { replace: true });
+    }
+  });
+
   const formik = useFormik({
     initialValues: { login: '', password: '', confirmPassword: '' },
     validationSchema: schema,
@@ -40,9 +47,7 @@ function Signup() {
       }
     },
   });
-  if (auth.loggedIn) {
-    navigate(clientRoutes.home(), { replace: true });
-  }
+
   return (
     <FormWrapper title={t('signupPage.title')}>
       <Form onSubmit={formik.handleSubmit} className="w-50 m-auto mb-4 p-0">
