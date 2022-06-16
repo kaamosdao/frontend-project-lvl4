@@ -28,18 +28,16 @@ function Rename() {
   const formik = useFormik({
     initialValues: { channel: name },
     validationSchema: channelsSchema(channels),
-    onSubmit: (values, actions) => {
-      const data = { id, name: values.channel };
-      makeSocketRequest(data, socket, 'renameChannel')
-        .then(() => {
-          actions.setSubmitting(false);
-          showToast(t('feedbackMessages.channel.renamed'), 'success');
-          dispatch(hideModal());
-        })
-        .catch((error) => {
-          actions.setSubmitting(false);
-          showToast(t(error.message), error.toastType);
-        });
+    onSubmit: async (values, actions) => {
+      try {
+        const data = { id, name: values.channel };
+        await makeSocketRequest(data, socket, 'renameChannel');
+        showToast(t('feedbackMessages.channel.renamed'), 'success');
+        dispatch(hideModal());
+      } catch (error) {
+        showToast(t(error.message), error.toastType);
+      }
+      actions.setSubmitting(false);
     },
   });
 

@@ -28,19 +28,17 @@ function Add() {
   const formik = useFormik({
     initialValues: { channel: '' },
     validationSchema: channelsSchema(channels),
-    onSubmit: (values, actions) => {
-      const data = { name: values.channel };
-      makeSocketRequest(data, socket, 'newChannel')
-        .then((response) => {
-          actions.setSubmitting(false);
-          showToast(t('feedbackMessages.channel.added'), 'success');
-          dispatch(hideModal());
-          dispatch(setCurrentChannel(response.id));
-        })
-        .catch((error) => {
-          actions.setSubmitting(false);
-          showToast(t(error.message), error.toastType);
-        });
+    onSubmit: async (values, actions) => {
+      try {
+        const data = { name: values.channel };
+        const { id } = await makeSocketRequest(data, socket, 'newChannel');
+        showToast(t('feedbackMessages.channel.added'), 'success');
+        dispatch(hideModal());
+        dispatch(setCurrentChannel(id));
+      } catch (error) {
+        showToast(t(error.message), error.toastType);
+      }
+      actions.setSubmitting(false);
     },
   });
 

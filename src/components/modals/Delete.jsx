@@ -16,18 +16,16 @@ function Delete() {
 
   const formik = useFormik({
     initialValues: { id },
-    onSubmit: (values, actions) => {
-      const data = { id: values.id };
-      makeSocketRequest(data, socket, 'removeChannel')
-        .then(() => {
-          actions.setSubmitting(false);
-          showToast(t('feedbackMessages.channel.removed'), 'success');
-          dispatch(hideModal());
-        })
-        .catch((error) => {
-          actions.setSubmitting(false);
-          showToast(t(error.message), error.toastType);
-        });
+    onSubmit: async (values, actions) => {
+      try {
+        const data = { id: values.id };
+        await makeSocketRequest(data, socket, 'removeChannel');
+        showToast(t('feedbackMessages.channel.removed'), 'success');
+        dispatch(hideModal());
+      } catch (error) {
+        showToast(t(error.message), error.toastType);
+      }
+      actions.setSubmitting(false);
     },
   });
 
