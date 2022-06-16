@@ -8,7 +8,6 @@ function DropdownButton({
   variantValue, item, showModal, toggleCurrentChannel,
 }) {
   const { t } = useTranslation();
-  const dropdownItems = ['deleting', 'renaming'];
 
   return (
     <Dropdown as={ButtonGroup} className="w-100">
@@ -19,10 +18,12 @@ function DropdownButton({
         <span className="visually-hidden">{t('homePage.channels.dropdownLabel')}</span>
       </Dropdown.Toggle>
       <Dropdown.Menu>
-        {dropdownItems.map((action) => {
-          const dropdownName = action === 'deleting' ? t('homePage.channels.dropdownRemove') : t('homePage.channels.dropdownRename');
-          return <Dropdown.Item key={action} href="#" role="button" onClick={() => showModal(action, item)}>{dropdownName}</Dropdown.Item>;
-        })}
+        <Dropdown.Item href="#" role="button" onClick={() => showModal('deleting', item)}>
+          {t('homePage.channels.dropdownRemove')}
+        </Dropdown.Item>
+        <Dropdown.Item href="#" role="button" onClick={() => showModal('renaming', item)}>
+          {t('homePage.channels.dropdownRename')}
+        </Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   );

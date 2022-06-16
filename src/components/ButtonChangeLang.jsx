@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ButtonGroup, ToggleButton } from 'react-bootstrap';
 
-const mapToggleButton = (array, langValue, onChange) => array.map((radio) => (
+const mapToggleButton = (languages, langValue, onChange) => languages.map((radio) => (
   <ToggleButton
     key={radio.name}
     id={`radio-${radio.name}`}
@@ -19,11 +19,11 @@ const mapToggleButton = (array, langValue, onChange) => array.map((radio) => (
 ));
 
 function ButtonChangeLang() {
-  const [langValue, setLangValue] = useState('ru');
+  const [lang, setLang] = useState('ru');
   const { i18n } = useTranslation();
 
   const onChange = (e) => {
-    setLangValue(e.currentTarget.value);
+    setLang(e.currentTarget.value);
     i18n.changeLanguage(e.currentTarget.value);
   };
   const languages = [
@@ -33,7 +33,7 @@ function ButtonChangeLang() {
 
   return (
     <ButtonGroup className="h-50 my-auto">
-      {mapToggleButton(languages, langValue, onChange)}
+      {mapToggleButton(languages, lang, onChange)}
     </ButtonGroup>
   );
 }
