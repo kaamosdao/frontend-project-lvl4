@@ -9,7 +9,6 @@ import { hideModal } from '../../slices/modalSlice.js';
 import showToast from '../../showToast.js';
 import { setCurrentChannel } from '../../slices/channelSlice.js';
 import makeSocketRequest from '../../makeSocketRequest.js';
-import { getInputClass } from '../../getInputClass.js';
 
 function Add() {
   const dispatch = useDispatch();
@@ -54,13 +53,14 @@ function Add() {
         <Form.Control
           ref={inputRef}
           autoComplete="off"
-          className={getInputClass(formik.isValid)}
+          className="form-control"
           type="text"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.channel}
           disabled={formik.isSubmitting}
           placeholder={t('modals.add.input')}
+          isInvalid={!formik.isValid}
         />
         <div className="invalid-tooltip">
           {formik.touched && t(formik.errors.channel)}

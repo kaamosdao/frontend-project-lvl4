@@ -8,7 +8,6 @@ import useAuth from '../../hooks/index.jsx';
 import FormWrapper from '../FormWrapper.jsx';
 import serverRoutes, { clientRoutes } from '../../routes.js';
 import handleError from '../../handleError.js';
-import { getInputClass } from '../../getInputClass.js';
 
 function Login() {
   const auth = useAuth();
@@ -45,7 +44,7 @@ function Login() {
 
         <FloatingLabel controlId="login" label={t('loginPage.login')} className="form-floating mb-4">
           <Form.Control
-            className={getInputClass(formik.isValid)}
+            className="form-control"
             type="text"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -54,12 +53,13 @@ function Login() {
             required
             disabled={formik.isSubmitting}
             placeholder={t('loginPage.login')}
+            isInvalid={!formik.isValid}
           />
         </FloatingLabel>
 
         <FloatingLabel controlId="password" label={t('loginPage.password')} className="form-floating mb-4">
           <Form.Control
-            className={getInputClass(formik.isValid)}
+            className="form-control"
             type="password"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -68,6 +68,7 @@ function Login() {
             required
             disabled={formik.isSubmitting}
             placeholder={t('loginPage.password')}
+            isInvalid={!formik.isValid}
           />
           <div className="invalid-tooltip">
             {formik.errors.userNotFound && t(formik.errors.userNotFound)}

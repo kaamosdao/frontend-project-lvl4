@@ -8,7 +8,6 @@ import { hideModal } from '../../slices/modalSlice.js';
 import showToast from '../../showToast.js';
 import { channelsSchema } from '../../validationSchema.js';
 import makeSocketRequest from '../../makeSocketRequest.js';
-import { getInputClass } from '../../getInputClass.js';
 
 function Rename() {
   const dispatch = useDispatch();
@@ -53,7 +52,7 @@ function Rename() {
         <Form.Control
           ref={inputRef}
           autoComplete="off"
-          className={getInputClass(formik.isValid)}
+          className="form-control"
           type="text"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
@@ -61,6 +60,7 @@ function Rename() {
           disabled={formik.isSubmitting}
           placeholder={t('modals.rename.input')}
           onFocus={() => inputRef.current.select()}
+          isInvalid={!formik.isValid}
         />
         <div className="invalid-tooltip">
           {formik.touched && t(formik.errors.channel)}
