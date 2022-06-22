@@ -4,7 +4,7 @@ import { Button, Form } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import { useSocket } from '../../hooks/index.jsx';
-import { hide } from '../../slices/modalSlice.js';
+import { hideModal } from '../../slices/modalSlice.js';
 import { setCurrentChannel } from '../../slices/channelSlice.js';
 import showToast from '../../showToast.js';
 import makeSocketRequest from '../../makeSocketRequest.js';
@@ -23,7 +23,7 @@ function Delete() {
         const data = { id: values.id };
         await makeSocketRequest(data, socket, 'removeChannel');
         showToast(t('feedbackMessages.channel.removed'), 'success');
-        dispatch(hide());
+        dispatch(hideModal());
         if (currentChannelId === id) {
           const defaultChannel = 1;
           dispatch(setCurrentChannel(defaultChannel));
@@ -36,7 +36,7 @@ function Delete() {
   });
 
   const handleClose = () => {
-    dispatch(hide());
+    dispatch(hideModal());
   };
 
   return (

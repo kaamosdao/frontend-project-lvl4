@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 import { Button, Form, FloatingLabel } from 'react-bootstrap';
 import { useSocket } from '../../hooks/index.jsx';
 import { channelsSchema } from '../../validationSchema.js';
-import { hide } from '../../slices/modalSlice.js';
+import { hideModal } from '../../slices/modalSlice.js';
 import showToast from '../../showToast.js';
 import { setCurrentChannel } from '../../slices/channelSlice.js';
 import makeSocketRequest from '../../makeSocketRequest.js';
@@ -22,7 +22,7 @@ function Add() {
   });
 
   const handleClose = () => {
-    dispatch(hide());
+    dispatch(hideModal());
   };
 
   const formik = useFormik({
@@ -33,7 +33,7 @@ function Add() {
         const data = { name: values.channel };
         const { id } = await makeSocketRequest(data, socket, 'newChannel');
         showToast(t('feedbackMessages.channel.added'), 'success');
-        dispatch(hide());
+        dispatch(hideModal());
         dispatch(setCurrentChannel(id));
       } catch (error) {
         showToast(t(error.message), error.toastType);
@@ -43,11 +43,12 @@ function Add() {
   });
 
   return (
-    <Form
-      onSubmit={formik.handleSubmit}
-      className="w-100 m-auto mb-4 p-0"
-    >
-      <FloatingLabel controlId="channel" label={t('modals.add.input')} className="form-floating mb-4">
+    <Form onSubmit={formik.handleSubmit} className="w-100 m-auto mb-4 p-0">
+      <FloatingLabel
+        controlId="channel"
+        label={t('modals.add.input')}
+        className="form-floating mb-4"
+      >
         <Form.Control
           ref={inputRef}
           autoComplete="off"

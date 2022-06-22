@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { hide } from '../../slices/modalSlice.js';
+import { hideModal } from '../../slices/modalSlice.js';
 import Add from './Add.jsx';
 import Delete from './Delete.jsx';
 import Rename from './Rename.jsx';
@@ -26,7 +26,7 @@ function ModalContainer() {
   const show = useSelector((state) => state.modal.show);
 
   const handleClose = () => {
-    dispatch(hide());
+    dispatch(hideModal());
   };
 
   return (
@@ -42,9 +42,7 @@ function ModalContainer() {
           {t(title[type])}
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body>
-        {modals[type]}
-      </Modal.Body>
+      <Modal.Body>{modals[type]}</Modal.Body>
     </Modal>
   );
 }

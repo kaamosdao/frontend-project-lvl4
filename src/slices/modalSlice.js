@@ -15,18 +15,18 @@ const modalSlice = createSlice({
   name: 'modal',
   initialState,
   reducers: {
-    show: (state, { payload }) => {
+    showModal: (state, { payload }) => {
       state.type = payload.type;
       state.data.id = payload.id;
       state.data.name = payload.name;
       state.show = true;
     },
-    hide: (state) => {
+    hideModal: (state) => {
       state.show = false;
     },
   },
 });
 
-export const { show, hide } = modalSlice.actions;
+export const { showModal, hideModal } = modalSlice.actions;
 
 export default modalSlice.reducer;

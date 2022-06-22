@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import { Button, Form, FloatingLabel } from 'react-bootstrap';
 import { useSocket } from '../../hooks/index.jsx';
-import { hide } from '../../slices/modalSlice.js';
+import { hideModal } from '../../slices/modalSlice.js';
 import showToast from '../../showToast.js';
 import { channelsSchema } from '../../validationSchema.js';
 import makeSocketRequest from '../../makeSocketRequest.js';
@@ -22,7 +22,7 @@ function Rename() {
   });
 
   const handleClose = () => {
-    dispatch(hide());
+    dispatch(hideModal());
   };
 
   const formik = useFormik({
@@ -33,7 +33,7 @@ function Rename() {
         const data = { id, name: values.channel };
         await makeSocketRequest(data, socket, 'renameChannel');
         showToast(t('feedbackMessages.channel.renamed'), 'success');
-        dispatch(hide());
+        dispatch(hideModal());
       } catch (error) {
         showToast(t(error.message), error.toastType);
       }
@@ -42,11 +42,12 @@ function Rename() {
   });
 
   return (
-    <Form
-      onSubmit={formik.handleSubmit}
-      className="w-100 m-auto mb-4 p-0"
-    >
-      <FloatingLabel controlId="channel" label={t('modals.rename.input')} className="form-floating mb-4">
+    <Form onSubmit={formik.handleSubmit} className="w-100 m-auto mb-4 p-0">
+      <FloatingLabel
+        controlId="channel"
+        label={t('modals.rename.input')}
+        className="form-floating mb-4"
+      >
         <Form.Control
           ref={inputRef}
           autoComplete="off"
