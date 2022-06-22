@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 import { Button, Form, FloatingLabel } from 'react-bootstrap';
 import { useSocket } from '../../hooks/index.jsx';
 import { channelsSchema } from '../../validationSchema.js';
-import { hideModal } from '../../slices/modalSlice.js';
+import { hide } from '../../slices/modalSlice.js';
 import showToast from '../../showToast.js';
 import { setCurrentChannel } from '../../slices/channelSlice.js';
 import makeSocketRequest from '../../makeSocketRequest.js';
@@ -22,7 +22,7 @@ function Add() {
   });
 
   const handleClose = () => {
-    dispatch(hideModal());
+    dispatch(hide());
   };
 
   const formik = useFormik({
@@ -33,7 +33,7 @@ function Add() {
         const data = { name: values.channel };
         const { id } = await makeSocketRequest(data, socket, 'newChannel');
         showToast(t('feedbackMessages.channel.added'), 'success');
-        dispatch(hideModal());
+        dispatch(hide());
         dispatch(setCurrentChannel(id));
       } catch (error) {
         showToast(t(error.message), error.toastType);

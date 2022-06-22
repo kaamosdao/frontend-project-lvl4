@@ -3,25 +3,30 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  action: null, // adding deleting renaming
-  item: null,
+  type: null, // adding deleting renaming
+  show: false,
+  data: {
+    id: null,
+    name: null,
+  },
 };
 
 const modalSlice = createSlice({
   name: 'modal',
   initialState,
   reducers: {
-    setModalInfo: (state, { payload }) => {
-      state.action = payload.action;
-      state.item = payload.item;
+    show: (state, { payload }) => {
+      state.type = payload.type;
+      state.data.id = payload.id;
+      state.data.name = payload.name;
+      state.show = true;
     },
-    hideModal: (state) => {
-      state.action = null;
-      state.item = null;
+    hide: (state) => {
+      state.show = false;
     },
   },
 });
 
-export const { setModalInfo, hideModal } = modalSlice.actions;
+export const { show, hide } = modalSlice.actions;
 
 export default modalSlice.reducer;

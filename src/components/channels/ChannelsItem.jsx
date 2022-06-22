@@ -4,7 +4,7 @@ import { Button, Nav } from 'react-bootstrap';
 import { setCurrentChannel } from '../../slices/channelSlice.js';
 import DropdownButton from './DropdownButton.jsx';
 
-function ChannelsItem({ showModal, item }) {
+function ChannelsItem({ item }) {
   const channels = useSelector((state) => state.channels.items);
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
   const dispatch = useDispatch();
@@ -20,7 +20,6 @@ function ChannelsItem({ showModal, item }) {
         <DropdownButton
           variantValue={variantValue}
           item={item}
-          showModal={showModal}
           toggleCurrentChannel={toggleCurrentChannel}
         />
       </Nav.Item>

@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { hideModal } from '../../slices/modalSlice.js';
+import { hide } from '../../slices/modalSlice.js';
 import Add from './Add.jsx';
 import Delete from './Delete.jsx';
 import Rename from './Rename.jsx';
@@ -22,11 +22,11 @@ const title = {
 function ModalContainer() {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const modalAction = useSelector((state) => state.modal.action);
-  const show = !!modalAction;
+  const type = useSelector((state) => state.modal.type);
+  const show = useSelector((state) => state.modal.show);
 
   const handleClose = () => {
-    dispatch(hideModal());
+    dispatch(hide());
   };
 
   return (
@@ -39,11 +39,11 @@ function ModalContainer() {
     >
       <Modal.Header className="border-0" closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          {t(title[modalAction])}
+          {t(title[type])}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        {modals[modalAction]}
+        {modals[type]}
       </Modal.Body>
     </Modal>
   );

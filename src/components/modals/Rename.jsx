@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import { Button, Form, FloatingLabel } from 'react-bootstrap';
 import { useSocket } from '../../hooks/index.jsx';
-import { hideModal } from '../../slices/modalSlice.js';
+import { hide } from '../../slices/modalSlice.js';
 import showToast from '../../showToast.js';
 import { channelsSchema } from '../../validationSchema.js';
 import makeSocketRequest from '../../makeSocketRequest.js';
@@ -13,7 +13,7 @@ function Rename() {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const { socket } = useSocket();
-  const { id, name } = useSelector((state) => state.modal.item);
+  const { id, name } = useSelector((state) => state.modal.data);
   const channels = useSelector((state) => state.channels.items);
   const inputRef = useRef(null);
 
@@ -22,7 +22,7 @@ function Rename() {
   });
 
   const handleClose = () => {
-    dispatch(hideModal());
+    dispatch(hide());
   };
 
   const formik = useFormik({
@@ -33,7 +33,7 @@ function Rename() {
         const data = { id, name: values.channel };
         await makeSocketRequest(data, socket, 'renameChannel');
         showToast(t('feedbackMessages.channel.renamed'), 'success');
-        dispatch(hideModal());
+        dispatch(hide());
       } catch (error) {
         showToast(t(error.message), error.toastType);
       }
