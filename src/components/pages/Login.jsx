@@ -18,7 +18,7 @@ function Login() {
     if (auth.loggedIn) {
       navigate(clientRoutes.home(), { replace: true });
     }
-  });
+  }, [auth.loggedIn, navigate]);
 
   const formik = useFormik({
     initialValues: { login: '', password: '' },
