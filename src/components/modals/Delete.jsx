@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import { useSocket } from '../../hooks/index.jsx';
 import { hide } from '../../slices/modalSlice.js';
+import { setCurrentChannel } from '../../slices/channelSlice.js';
 import showToast from '../../showToast.js';
 import makeSocketRequest from '../../makeSocketRequest.js';
 
@@ -13,6 +14,7 @@ function Delete() {
   const { socket } = useSocket();
   const { t } = useTranslation();
   const { id } = useSelector((state) => state.modal.data);
+  const currentChannelId = useSelector((state) => state.channels.currentChannelId);
 
   const formik = useFormik({
     initialValues: { id },
@@ -22,6 +24,10 @@ function Delete() {
         await makeSocketRequest(data, socket, 'removeChannel');
         showToast(t('feedbackMessages.channel.removed'), 'success');
         dispatch(hide());
+        if (currentChannelId === id) {
+          const defaultChannel = 1;
+          dispatch(setCurrentChannel(defaultChannel));
+        }
       } catch (error) {
         showToast(t(error.message), error.toastType);
       }

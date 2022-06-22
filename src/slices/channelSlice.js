@@ -1,7 +1,7 @@
 /* eslint no-param-reassign: ["error", { "props": false }] */
 
 import { createSlice } from '@reduxjs/toolkit';
-import removeItemFromState from './removeItemFromState.js';
+import _ from 'lodash';
 
 const initialState = {
   currentChannelId: 1,
@@ -22,7 +22,11 @@ const channelSlice = createSlice({
       state.currentChannelId = payload;
     },
     removeChannel: (state, { payload }) => {
-      state.items = removeItemFromState(state, 'id', payload.id);
+      state.items = _.remove(state.items, (item) => item.id !== payload.id);
+      if (payload.id === state.currentChannelId) {
+        const defaultId = 1;
+        state.currentChannelId = defaultId;
+      }
     },
     renameChannel: (state, { payload }) => {
       const index = state.items.findIndex((element) => element.id === payload.id);

@@ -9,12 +9,7 @@ import resources from './locales/index.js';
 import App from './App.jsx';
 import store from './slices/index.js';
 import { addMessage } from './slices/messageSlice.js';
-import {
-  addChannel,
-  setCurrentChannel,
-  removeChannel,
-  renameChannel,
-} from './slices/channelSlice.js';
+import { addChannel, removeChannel, renameChannel } from './slices/channelSlice.js';
 import AuthContext from './hooks/AuthContext.jsx';
 import SocketContext from './hooks/SocketContext.jsx';
 import localStorageData from './localStorageData.js';
@@ -70,7 +65,6 @@ export default async (socket) => {
   });
   socket.on('removeChannel', (data) => {
     store.dispatch(removeChannel(data));
-    store.dispatch(setCurrentChannel(1));
   });
   socket.on('renameChannel', (data) => {
     store.dispatch(renameChannel(data));
