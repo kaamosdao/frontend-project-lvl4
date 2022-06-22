@@ -4,7 +4,7 @@ import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 import { ToastContainer } from 'react-toastify';
 import filter from 'leo-profanity';
 import i18next from 'i18next';
-import { initReactI18next } from 'react-i18next';
+import { initReactI18next, I18nextProvider } from 'react-i18next';
 import resources from './locales/index.js';
 import App from './App.jsx';
 import store from './slices/index.js';
@@ -82,7 +82,9 @@ export default async (socket) => {
         <ErrorBoundary>
           <AppProvider socket={socket}>
             <AuthProvider>
-              <App />
+              <I18nextProvider i18n={i18nInstance}>
+                <App />
+              </I18nextProvider>
               <ToastContainer />
             </AuthProvider>
           </AppProvider>
