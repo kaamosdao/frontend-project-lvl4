@@ -4,23 +4,19 @@ import { Button, Nav } from 'react-bootstrap';
 import { setCurrentChannel } from '../../slices/channelSlice.js';
 import DropdownButton from './DropdownButton.jsx';
 
-function ChannelsItem({ item }) {
-  const channels = useSelector((state) => state.channels.items);
+function ChannelsItem({ channel }) {
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
   const dispatch = useDispatch();
-  const toggleCurrentChannel = (event) => {
-    const channelName = event.target.textContent.slice(2);
-    const { id } = channels.find((channel) => channel.name === channelName);
-    dispatch(setCurrentChannel(id));
+  const toggleCurrentChannel = () => {
+    dispatch(setCurrentChannel(channel.id));
   };
-  const variantValue = item.id === currentChannelId ? 'secondary' : '';
-  if (item.removable) {
+  const variantValue = channel.id === currentChannelId ? 'secondary' : '';
+  if (channel.removable) {
     return (
-      <Nav.Item as="li" key={item.id} className="w-100">
+      <Nav.Item as="li" id={channel.id} className="w-100">
         <DropdownButton
           variantValue={variantValue}
-          item={item}
-          toggleCurrentChannel={toggleCurrentChannel}
+          channel={channel}
         />
       </Nav.Item>
     );
@@ -29,12 +25,12 @@ function ChannelsItem({ item }) {
     <Nav.Item
       onClick={toggleCurrentChannel}
       as="li"
-      key={item.id}
+      id={channel.id}
       className="w-100"
     >
       <Button variant={variantValue} className="text-start rounded-0 w-100">
         <span># </span>
-        {item.name}
+        {channel.name}
       </Button>
     </Nav.Item>
   );

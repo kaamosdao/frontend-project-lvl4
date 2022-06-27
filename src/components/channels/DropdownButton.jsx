@@ -2,20 +2,31 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Button, Dropdown, ButtonGroup } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { setCurrentChannel } from '../../slices/channelSlice.js';
 import { showModal } from '../../slices/modalSlice.js';
 
-function DropdownButton({ variantValue, item, toggleCurrentChannel }) {
+function DropdownButton({ variantValue, channel }) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const { id, name } = channel;
+  const handleSetChannel = () => {
+    dispatch(setCurrentChannel(id));
+  };
+  const handleDeleteChannel = () => {
+    dispatch(showModal({ type: 'deleting', id, name }));
+  };
+  const handleRenameChannel = () => {
+    dispatch(showModal({ type: 'renaming', id, name }));
+  };
 
   return (
     <Dropdown as={ButtonGroup} className="w-100">
       <Button
         variant={variantValue}
         className="text-start rounded-0 w-100"
-        onClick={toggleCurrentChannel}
+        onClick={handleSetChannel}
       >
-        {`# ${item.name}`}
+        {`# ${channel.name}`}
       </Button>
       <Dropdown.Toggle split variant={variantValue} id="dropdown-split-basic">
         <span className="visually-hidden">
@@ -26,14 +37,14 @@ function DropdownButton({ variantValue, item, toggleCurrentChannel }) {
         <Dropdown.Item
           href="#"
           role="button"
-          onClick={() => dispatch(showModal({ type: 'deleting', id: item.id, name: item.name }))}
+          onClick={handleDeleteChannel}
         >
           {t('homePage.channels.dropdownRemove')}
         </Dropdown.Item>
         <Dropdown.Item
           href="#"
           role="button"
-          onClick={() => dispatch(showModal({ type: 'renaming', id: item.id, name: item.name }))}
+          onClick={handleRenameChannel}
         >
           {t('homePage.channels.dropdownRename')}
         </Dropdown.Item>

@@ -3,8 +3,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import _ from 'lodash';
 
+const defaultChannelId = 1;
+
 const initialState = {
-  currentChannelId: 1,
+  currentChannelId: defaultChannelId,
   items: [],
 };
 
@@ -24,8 +26,7 @@ const channelSlice = createSlice({
     removeChannel: (state, { payload }) => {
       state.items = _.remove(state.items, (item) => item.id !== payload.id);
       if (payload.id === state.currentChannelId) {
-        const defaultId = 1;
-        state.currentChannelId = defaultId;
+        state.currentChannelId = defaultChannelId;
       }
     },
     renameChannel: (state, { payload }) => {

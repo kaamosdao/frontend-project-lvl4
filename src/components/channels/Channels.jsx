@@ -25,7 +25,7 @@ function Channels() {
       </div>
       <Nav as="ul" className="">
         {channels.map((item) => (
-          <ChannelsItem key={item.id} item={item} />
+          <ChannelsItem key={item.id} channel={item} />
         ))}
       </Nav>
     </>
