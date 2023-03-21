@@ -6,7 +6,7 @@
 
 Simple messenger created using React/Redux.
 
-[Click here to try it! Deployed on Railway.](frontend-project-lvl4-production-60ee.up.railway.app)
+[Click here to try it! Deployed on Railway.](https://frontend-project-lvl4-production-60ee.up.railway.app/)
 
 #
 ## Install
