@@ -6,7 +6,7 @@
 
 Simple messenger created using React/Redux.
 
-[Sorry, for now deployment is not working, due to Heroku payment plan changes. Considering moving to Railway](https://app--messenger.herokuapp.com/)
+[Click here to try it! Deployed on Railway.](frontend-project-lvl4-production-60ee.up.railway.app)
 
 #
 ## Install
